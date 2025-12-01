@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balog Stoica - Societate Civilă Profesională de Avocați</title>
+    <link rel="stylesheet" href="./Assets/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="./Assets/logo.svg" alt="Balog Stoica Logo">
+            </a>
+            <div class="nav-links desktop">
+                <a href="#about">Despre noi</a>
+                <a href="#team">Echipă</a>
+                <a href="#services">Servicii</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="nav-toggle mobile" aria-label="Toggle navigation" id="menuToggle">
+                <img src="./Assets/Hamburger_icon.svg.png" alt="Menu">
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Modal -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <img src="./Assets/logo.svg" alt="Balog Stoica Logo" class="mobile-menu-logo">
+            <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <a href="#about" class="mobile-menu-link">Despre noi</a>
+            <a href="#team" class="mobile-menu-link">Echipă</a>
+            <a href="#services" class="mobile-menu-link">Servicii</a>
+            <a href="#contact" class="mobile-menu-link">Contact</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="logo-reveal">
+            <img src="./Assets/logo.svg" alt="Balog Stoica">
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h1 class="section-title">
+                Societate civilă profesională de avocați formata într-un mediuin care precizia, excelența și integritatea nu sunt opțiuni, ci exigențe zilnice.
+            </h1>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <h2 class="value-title">Experiența</h2>
+                    <p class="value-description">
+                        Experiența noastră, consolidată prin gestionarea cu succes a unor dosare complexe și sensibile, ne-a arătat că adevărata valoare a unui demers juridic nu stă în volum, ci în atenția acordată fiecărui detaliu. Abordăm fiecare cauză încredințată cu rigoare și responsabilitate, identificând strategia adecvată și asigurând implementarea sa în mod optim.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <h2 class="value-title">Motivația</h2>
+                    <p class="value-description">
+                        În viziunea noastră, încrederea se clădește prin onestitate, transparență și implicare autentică, iar succesul nostru se definește prin rezultatele excepționale și satisfacția clienților. Ne implicăm activ pentru înțelegerea nevoilor fiecărui client, reușind să oferim soluții juridice adaptate contextului, intereselor și obiectivelor sale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section container" id="team">
+        <div class="team-sticky-wrapper">
+            <div class="team-sticky-content" id="team-sticky-content">
+                <!-- Team Member 1 -->
+                <div class="team-card">
+                    <div class="team-card-content">
+                        <h2 class="team-member-name">Avocat Ioana Camelia Balog</h2>
+                        <p class="team-member-subtitle">Co-fondator Balog & Stoica – SCA</p>
+                        
+                        <div class="team-member-bio">
+                            <p>Ioana și-a construit parcursul profesional în jurul pasiunii pentru dreptul penal și a convingerii că apărarea drepturilor fundamentale trebuie făcută cu responsabilitate și curaj.</p>
+                            
+                            <p>În activitatea sa profesională, desfășurată preponderent în sfera dreptului penal, a fost implicată în numeroase cauze complexe, acoperind o gamă variată de infracțiuni – de la infracțiuni economice, de serviciu sau de corupție, până la fapte de drept comun.</p>
+                            
+                            <p>Îmbinând experiența în drept penal cu o înțelegere aprofundată a mediului actual de afaceri, oferă de asemenea consultanță societară în constituiri, reorganizări și fuziuni, cu atenție la detalii și la impactul juridic și economic al deciziilor.</p>
+                        </div>
+                        
+                        <div class="team-member-divider"></div>
+                        
+                        <div class="team-member-credentials">
+                            <div class="credentials-column">
+                                <p>Avocat în cadrul Baroului București</p>
+                                <p>Facultatea de Drept, Universitatea Babeș-Bolyai</p>
+                                <p>Master Științe Penale, Universitatea din București</p>
+                                <p>Radboud University, Olanda</p>
+                            </div>
+                            <div class="credentials-column">
+                                <p>Drept penal</p>
+                                <p>Drept penal al afacerilor</p>
+                                <p>Drept societar</p>
+                            </div>
+                        </div>
+                        
+                        <div class="team-member-divider"></div>
+                        
+                        <div class="team-member-contact">
+                            <a href="/cdn-cgi/l/email-protection#b8d1d7d9d6d9f8dad9d4d7df95cbccd7d1dbd996dbd7d5" class="contact-email"><span class="__cf_email__" data-cfemail="791016181718391b1815161e540a0d16101a18571a1614">[email&#160;protected]</span></a>
+                            <a href="tel:+40747496549" class="contact-phone">+40 747 496 549</a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card-image">
+                        <img src="./Assets/ioana.jpg" alt="Avocat Ioana Camelia Balog">
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card">
+                    <div class="team-card-content">
+                        <h2 class="team-member-name">Avocat Andrei Stoica</h2>
+                        <p class="team-member-subtitle">Co-fondator Balog & Stoica – SCA</p>
+                        
+                        <div class="team-member-bio">
+                            <p>Andrei aduce o perspectivă analitică și strategică în abordarea cazurilor complexe, având o experiență vastă în litigii comerciale și drept civil.</p>
+                            
+                            <p>Cu o carieră dedicată excelenței juridice, s-a specializat în reprezentarea companiilor în disputele contractuale, recuperări de creanțe și proceduri de insolvență, oferind soluții pragmatice și eficiente.</p>
+                            
+                            <p>Expertiza sa în dreptul comercial este completată de o înțelegere profundă a dinamicii afacerilor, permițându-i să ofere consultanță juridică adaptată realităților economice actuale.</p>
+                        </div>
+                        
+                        <div class="team-member-divider"></div>
+                        
+                        <div class="team-member-credentials">
+                            <div class="credentials-column">
+                                <p>Avocat în cadrul Baroului București</p>
+                                <p>Facultatea de Drept, Universitatea București</p>
+                                <p>Master Drept Comercial, ASE București</p>
+                                <p>Programă de specializare, King's College London</p>
+                            </div>
+                            <div class="credentials-column">
+                                <p>Drept comercial</p>
+                                <p>Litigii civile</p>
+                                <p>Drept al insolvenței</p>
+                            </div>
+                        </div>
+                        
+                        <div class="team-member-divider"></div>
+                        
+                        <div class="team-member-contact">
+                            <a href="/cdn-cgi/l/email-protection#e5848b8197808ca58784898a82c896918a8c8684cb868a88" class="contact-email"><span class="__cf_email__" data-cfemail="13727d7761767a5371727f7c743e60677c7a70723d707c7e">[email&#160;protected]</span></a>
+                            <a href="tel:+40747496550" class="contact-phone">+40 747 496 550</a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card-image">
+                        <img src="./Assets/stoica.jpg" alt="Avocat Andrei Stoica">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section container" id="services">
+        <div class="services-sticky-wrapper">
+            <div class="services-sticky-content" id="services-sticky-content">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <h2 class="service-title">Drept Penal și White-collar / Compliance</h2>
+                    <div class="service-description">
+                        <p>Domeniul nostru principal de activitate este dreptul penal, în toate formele sale — de la apărarea drepturilor fundamentale ale persoanelor acuzate până la protejarea intereselor celor vătămate de săvârșirea unor infracțiuni. Oferim asistență juridică completă și reprezentare profesională pentru persoane fizice și juridice, adaptată fiecărei cauze în parte.</p>
+                        
+                        <p>În paralel, sprijinim companii și instituții prin servicii de white-collar & compliance, oferind consultanță pentru elaborarea și implementarea politicilor interne de conformitate și integritate, evaluarea riscurilor și gestionarea situațiilor de criză, precum și reprezentare în investigații interne, inspecții, controale sau proceduri penale complexe.</p>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <h2 class="service-title">Drept Societar</h2>
+                    <div class="service-description">
+                        <p>Oferim asistență completă în operațiunile precum înființarea și reorganizarea societăților, modificări ale actelor de conducere, obiect de activitate, asociați, capitaluri sociale și acțiuni sau alte proceduri aferente întreprinderii, în gestionarea relațiilor dintre asociați sau a conflictelor cu terții, în soluționarea conflictelor societare. Asigurăm asistența și documentația necesare, reprezentare în fața autorităților și a instanței competente.</p>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <h2 class="service-title">Litigii Civile și Comerciale</h2>
+                    <div class="service-description">
+                        <p>Asistăm clienții în cadrul unor dispute civile și comerciale complexe, de la contracte comerciale și recuperări de creanțe până la litigii imobiliare și de construcții. Echipa noastră oferă consultanță strategică și reprezentare în instanță, având ca scop protejarea intereselor clientului și obținerea celor mai favorabile soluții.</p>
+                        
+                        <p>Abordarea noastră se bazează pe înțelegerea profundă a particularităților fiecărui caz și pe identificarea celor mai eficiente căi de rezolvare, fie prin negociere, fie prin proceduri judiciare.</p>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <h2 class="service-title">Drept al Muncii</h2>
+                    <div class="service-description">
+                        <p>Oferim consultanță în domeniul dreptului muncii atât angajatorilor, cât și angajaților, acoperind aspecte precum încheierea și modificarea contractelor de muncă, proceduri disciplinare, concedieri, litigii de muncă și respectarea legislației în vigoare.</p>
+                        
+                        <p>Asistăm companiile în elaborarea și implementarea politicilor interne de resurse umane și în gestionarea relațiilor de muncă pentru a preveni potențiale conflicte și a asigura conformitatea cu reglementările legale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h1 class="contact-title">Contact</h1>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Nume complet" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Adresă email" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Număr telefon">
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="subject" placeholder="Subiect" required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea name="message" rows="6" placeholder="Mesajul dumneavoastră" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">TRIMITE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3 class="footer-heading">ADRESĂ BUCUREȘTI</h3>
+                <p>Str. Example Nr. 123</p>
+                <p>Sector 1, București</p>
+                <p>România</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">LINK-URI UTILE</h3>
+                <a href="#privacy" class="footer-link">Politica de Confidențialitate</a>
+                <a href="#terms" class="footer-link">Termeni și Condiții</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">CONTACT GENERAL</h3>
+                <p>Tel: <a href="tel:+40212345678" class="footer-contact-link">+40 21 XXX XXXX</a></p>
+                <p>Email: <a href="mailto:office@balog-stoica.ro" class="footer-contact-link">office@balog-stoica.ro</a></p>
+                <p><a href="https://www.balog-stoica.ro" class="footer-contact-link">www.balog-stoica.ro</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Balog & Stoica - Societate Civilă Profesională de Avocați. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./Assets/script.js"></script>
+
+</body>
+
+</html>

@@ -115,15 +115,21 @@
             }
         });
         
-        // Run on load and resize
+        // Run on load
         window.addEventListener('load', () => {
             updateTeamScroll();
             updateServicesScroll();
         });
-        // window.addEventListener('resize', () => {
-        //     updateTeamScroll();
-        //     updateServicesScroll();
-        // });
+
+        // Debounced resize handler to prevent excessive calls
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateTeamScroll();
+                updateServicesScroll();
+            }, 150);
+        });
 
         // ===== SERVICES SECTION HORIZONTAL SCROLL =====
         const servicesWrapper = document.querySelector('.services-section');

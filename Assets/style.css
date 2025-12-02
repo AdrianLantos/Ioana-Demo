@@ -318,7 +318,6 @@ h1 {
     background-color: transparent;
     height: fit-content;
     max-height: 90vh;
-    overflow-y: auto;
 }
 
 .team-card:last-of-type{
@@ -415,7 +414,7 @@ h1 {
 
 .team-card-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
@@ -439,7 +438,7 @@ h1 {
 
 .services-sticky-content {
     display: flex;
-    gap: 60px;
+    gap: 90px;
     will-change: transform;
     transition: none;
     width: fit-content;
@@ -448,7 +447,7 @@ h1 {
 }
 
 .service-card {
-    width: 500px;
+    width: 60%;
     min-width: 500px;
     flex-shrink: 0;
     background-color: transparent;

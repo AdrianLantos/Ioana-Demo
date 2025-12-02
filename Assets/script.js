@@ -120,10 +120,10 @@
             updateTeamScroll();
             updateServicesScroll();
         });
-        window.addEventListener('resize', () => {
-            updateTeamScroll();
-            updateServicesScroll();
-        });
+        // window.addEventListener('resize', () => {
+        //     updateTeamScroll();
+        //     updateServicesScroll();
+        // });
 
         // ===== SERVICES SECTION HORIZONTAL SCROLL =====
         const servicesWrapper = document.querySelector('.services-section');

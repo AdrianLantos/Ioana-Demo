@@ -3,29 +3,35 @@
    ================================ */
 @font-face {
     font-family: 'HelveticaNowDisplay';
-    src: url('fonts/HelveticaNowDisplay-BoldIta.otf') format('opentype');
+    src: url('fonts/HelveticaNow/HelveticaNow/HelveticaNowDisplay-BoldIta.otf') format('opentype');
     font-weight: normal;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'HelveticaNowDisplay';
-    src: url('fonts/HelveticaNowDisplay-Bold.otf') format('opentype');
+    src: url('fonts/HelveticaNow/HelveticaNowDisplay-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'HelveticaNowDisplay';
-    src: url('fonts/HelveticaNowDisplay-Medium.otf') format('opentype');
+    src: url('fonts/HelveticaNow/HelveticaNowDisplay-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ACaslonPro';
-    src: url('fonts/ACaslonPro-Bold.otf') format('opentype');
+    src: url('fonts/AdobeCaslonPro/ACaslonPro-Bold.otf') format('opentype');
     font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ACaslonPro';
+    src: url('fonts/AdobeCaslonPro/ACaslonPro-Regular.otf') format('opentype');
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -38,7 +44,8 @@
     --font-body: 'ACaslonPro', Georgia, serif;
     --font-heading-size: clamp(28px, 4vw, 48px);
     --font-subheading-size: clamp(26px, 3vw, 42px);
-    --font-text-size: clamp(16px, 1.5vw, 20px);
+    --font-text-size: clamp(18px, 1.5vw, 20px);
+     --font-small-text-size:clamp(15px, 1.2vw, 16px);
 
     /* Layout */
     --max-width: 1380px;
@@ -206,7 +213,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -219,6 +226,7 @@ h1 {
 .logo-reveal img {
     width: 90%;
     min-width: 250px;
+    padding-bottom: 25px;
 }
 
 .hero-background {
@@ -331,7 +339,7 @@ h1 {
 
 .team-member-name {
     font-family: var(--font-heading);
-    font-size: clamp(24px, 3vw, 36px);
+    font-size: var(--font-heading-size);
     font-weight: bold;
     margin: 0 0 10px;
     color: var(--color-text);
@@ -339,9 +347,13 @@ h1 {
 
 .team-member-subtitle {
     font-family: var(--font-body);
-    font-size: var(--font-text-size);
+    font-size: var(--font-subheading-size);
     color: var(--color-text-light);
     margin: 0 0 30px;
+}
+
+.team-card-image.mobile{
+    display: none;
 }
 
 .team-member-bio {
@@ -375,7 +387,7 @@ h1 {
 
 .credentials-column p {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1.2vw, 16px);
+    font-size: var(--font-small-text-size);
     color: var(--color-text);
     margin: 0 0 12px;
     line-height: 1.6;
@@ -394,7 +406,7 @@ h1 {
 .contact-email,
 .contact-phone {
     font-family: var(--font-heading);
-    font-size: clamp(16px, 1.3vw, 18px);
+    font-size: var(--font-text-size);
     font-weight: 500;
     text-decoration: none;
     transition: color var(--transition-base);
@@ -754,6 +766,14 @@ h1 {
     }
 
     .nav-toggle.mobile {
+        display: block;
+    }
+
+    .team-card-image.desktop{
+        display: none;
+    }
+
+    .team-card-image.mobile{
         display: block;
     }
 }

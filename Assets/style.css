@@ -7,8 +7,8 @@
     --font-body: 'ACaslonPro', serif;
     --font-heading-size: clamp(28px, 4vw, 48px);
     --font-subheading-size: clamp(22px, 2.5vw, 35px);
-    --font-text-size: clamp(18px, 1.5vw, 20px);
-    --font-small-text-size: clamp(16px, 1.2vw, 20px);
+    --font-text-size: clamp(18px, 1.5vw, 21px);
+    --font-small-text-size: clamp(16px, 1.2vw, 19px);
 
     /* Layout */
     --max-width: 1380px;
@@ -119,7 +119,7 @@ p {
 .nav-links a {
     font-family: var(--font-heading);
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
     color: var(--color-text);
     transition: color var(--transition-base);
@@ -573,6 +573,7 @@ p {
     margin: 0 auto;
     width: 100%;
     margin-top: 50px;
+    max-width: var(--max-width);
 }
 
 /* ================================

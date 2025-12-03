@@ -1,368 +1,4 @@
 /* ================================
-   Font Declarations
-   ================================ */
-/* HelveticaNowDisplay Fonts */
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-BlackIta.otf') format('opentype');
-    font-weight: 900;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-BoldIta.otf') format('opentype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtBlk.otf') format('opentype');
-    font-weight: 950;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtBlkIta.otf') format('opentype');
-    font-weight: 950;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtBd.otf') format('opentype');
-    font-weight: 800;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtBdIta.otf') format('opentype');
-    font-weight: 800;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtLt.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ExtLtIta.otf') format('opentype');
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Hairline.otf') format('opentype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-HairlineIta.otf') format('opentype');
-    font-weight: 100;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-LightIta.otf') format('opentype');
-    font-weight: 300;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-MediumIta.otf') format('opentype');
-    font-weight: 500;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-RegularIta.otf') format('opentype');
-    font-weight: 400;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Thin.otf') format('opentype');
-    font-weight: 250;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowDisplay';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-ThinIta.otf') format('opentype');
-    font-weight: 250;
-    font-style: italic;
-}
-
-/* HelveticaNowMicro Fonts */
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-BoldItalic.otf') format('opentype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-ExtBd.otf') format('opentype');
-    font-weight: 800;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-ExtBdIta.otf') format('opentype');
-    font-weight: 800;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-ExtLt.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-ExtLtIta.otf') format('opentype');
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-LightIta.otf') format('opentype');
-    font-weight: 300;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-MediumIta.otf') format('opentype');
-    font-weight: 500;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowMicro';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowMicro-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-/* HelveticaNowText Fonts */
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-BlackItalic.otf') format('opentype');
-    font-weight: 900;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-BoldItalic.otf') format('opentype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-ExtBd.otf') format('opentype');
-    font-weight: 800;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-ExtBdIta.otf') format('opentype');
-    font-weight: 800;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-ExtLt.otf') format('opentype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-ExtLtIta.otf') format('opentype');
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Light.otf') format('opentype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Medium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-MediumItalic.otf') format('opentype');
-    font-weight: 500;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-Thin.otf') format('opentype');
-    font-weight: 250;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HelveticaNowText';
-    src: url('./fonts/HelveticaNowDisplay/HelveticaNowText-ThinItalic.otf') format('opentype');
-    font-weight: 250;
-    font-style: italic;
-}
-
-/* Adobe Caslon Pro Fonts */
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('./fonts/AdobeCaslonPro/ACaslonPro-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('./fonts/AdobeCaslonPro/ACaslonPro-BoldItalic.otf') format('opentype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('./fonts/AdobeCaslonPro/ACaslonPro-Italic.otf') format('opentype');
-    font-weight: 400;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('./fonts/AdobeCaslonPro/ACaslonPro-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('./fonts/AdobeCaslonPro/ACaslonPro-Semibold.otf') format('opentype');
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'ACaslonPro';
-    src: url('././fonts/AdobeCaslonPro/ACaslonPro-SemiboldItalic.otf') format('opentype');
-    font-weight: 600;
-    font-style: italic;
-}
-
-/* ================================
    CSS Variables
    ================================ */
 :root {
@@ -370,9 +6,9 @@
     --font-heading: 'HelveticaNowDisplay', sans-serif;
     --font-body: 'ACaslonPro', serif;
     --font-heading-size: clamp(28px, 4vw, 48px);
-    --font-subheading-size: clamp(26px, 3vw, 42px);
+    --font-subheading-size: clamp(22px, 2.5vw, 35px);
     --font-text-size: clamp(18px, 1.5vw, 20px);
-    --font-small-text-size: clamp(15px, 1.2vw, 16px);
+    --font-small-text-size: clamp(16px, 1.2vw, 20px);
 
     /* Layout */
     --max-width: 1380px;
@@ -416,7 +52,6 @@ body {
     padding: 0;
     font-family: var(--font-body);
     color: var(--color-text);
-    line-height: 1.6;
     width: 100vw;
 }
 
@@ -571,6 +206,12 @@ p {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    filter: grayscale(100%);
+    transition: filter var(--transition-base);
+}
+
+.hero-background:hover {
+    filter: grayscale(0%);
 }
 
 /* ================================
@@ -650,7 +291,6 @@ p {
     transition: none;
     width: fit-content;
     height: 93%;
-    align-items: center;
 }
 
 .team-card {
@@ -659,7 +299,7 @@ p {
     min-width: 800px;
     flex-shrink: 0;
     display: flex;
-    gap: 60px;
+    gap: 35px;
     background-color: transparent;
     height: fit-content;
     max-height: 90%;
@@ -683,7 +323,7 @@ p {
 }
 
 .team-member-subtitle {
-    font-family: var(--font-body);
+    font-family: var(--font-heading);
     font-size: var(--font-subheading-size);
     color: var(--color-text-light);
     margin: 0 0 30px;
@@ -733,8 +373,8 @@ p {
 
 .team-member-contact {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .contact-email,
@@ -752,10 +392,11 @@ p {
 }
 
 .team-card-image {
-    width: 400px;
+    width: 460px;
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
+    max-width: 40%;
 }
 
 .team-card-image img {
@@ -773,6 +414,9 @@ p {
     position: relative;
     overflow-x: clip;
     max-width: none;
+    display: flex;
+    justify-content: center;
+    align-items: start;
 }
 
 .services-sticky-wrapper {
@@ -781,17 +425,19 @@ p {
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    width: 100%;
+    max-width: var(--max-width);
 }
 
 .services-sticky-content {
-    display: flex;
+   display: flex;
     gap: 90px;
     will-change: transform;
     transition: none;
-    width: fit-content;
-    max-width: var(--max-width);
+    width: 110%;
     padding: 0 var(--container-padding);
+    position: absolute;
 }
 
 .service-card {
@@ -800,6 +446,10 @@ p {
     flex-shrink: 0;
     background-color: transparent;
     padding: 0;
+}
+
+.filler-card {
+    width: 1px;
 }
 
 .service-title {
@@ -1230,6 +880,7 @@ p {
         gap: 60px;
         transform: none !important;
         width: 100%;
+        position: relative;
     }
 
     .service-card {
@@ -1264,7 +915,7 @@ p {
     }
 
     .value-card {
-        padding: 30px 20px;
+        padding: 0px;
     }
 
     .section-title {
@@ -1272,7 +923,12 @@ p {
     }
 
     .team-card {
-        padding: 30px 20px;
+        padding: 0px;
+        margin-bottom: var(--section-spacing-mobile);
+    }
+
+    .team-card:last-of-type{
+        padding: 0;
     }
 
     .contact-form {

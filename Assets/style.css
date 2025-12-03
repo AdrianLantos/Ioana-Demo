@@ -545,14 +545,10 @@
         padding: var(--section-spacing-mobile) 0;
     }
 
-    .placeholder-section {
-        padding: var(--section-spacing-mobile) 0;
-    }
-
     /* Team section responsive */
     .team-section {
         height: auto;
-        padding: var(--section-spacing-mobile) 0;
+        padding: var(--section-spacing-mobile) 20px;
     }
 
     .team-sticky-wrapper {

@@ -309,7 +309,7 @@ p {
     max-height: 90%;
 }
 
-.team-card:last-of-type {
+#rares-card {
     padding-left: 30px;
 }
 
@@ -331,10 +331,6 @@ p {
     font-size: var(--font-subheading-size);
     color: var(--color-text-light);
     margin: 0 0 30px;
-}
-
-.team-card-image.mobile {
-    display: none;
 }
 
 .team-member-bio {
@@ -398,6 +394,7 @@ p {
 }
 
 .team-card-image {
+    position: relative;
     width: 460px;
     flex-shrink: 0;
     display: flex;
@@ -410,6 +407,34 @@ p {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+.team-card-image.mobile {
+    display: none;
+}
+
+.team-card-image::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('./Img/IOANA\ BALOG\ -\ HOVER_IOANA\ BW.webp');
+    background-size: cover;
+    background-position: center;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: opacity var(--transition-base);
+}
+
+#rares-card .team-card-image::after {
+    background: url('./Img/IOANA\ BALOG\ -\ HOVER_RARES\ BW.webp');
+    background-size: cover;
+    background-position: center
+}
+
+.team-card-image:hover::after {
+    opacity: 0;
 }
 
 /* ================================
@@ -940,7 +965,7 @@ p {
     }
 
     .section-title {
-       margin-bottom: var(--section-spacing-mobile);
+        margin-bottom: var(--section-spacing-mobile);
     }
 
     .team-card {

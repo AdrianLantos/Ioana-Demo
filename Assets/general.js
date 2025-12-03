@@ -32,3 +32,39 @@ document.addEventListener('keydown', (e) => {
         closeMenu();
     }
 });
+
+// ===== NAVBAR SCROLL BEHAVIOR =====
+const navbar = document.querySelector('.navbar');
+const heroSection = document.querySelector('.hero-section');
+let lastScrollY = window.scrollY;
+let ticking = false;
+
+function updateNavbar() {
+    const currentScrollY = window.scrollY;
+    const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+
+    // Only apply hide/show behavior after scrolling past the hero section
+    if (currentScrollY > heroHeight) {
+        if (currentScrollY > lastScrollY) {
+            // Scrolling down - hide navbar
+            navbar.classList.add('hidden');
+        } else {
+            // Scrolling up - show navbar
+            navbar.classList.remove('hidden');
+        }
+    } else {
+        // Still in hero section - always show navbar
+        navbar.classList.remove('hidden');
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+}
+
+// Use requestAnimationFrame for better performance
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(updateNavbar);
+        ticking = true;
+    }
+});

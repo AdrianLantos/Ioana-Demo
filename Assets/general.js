@@ -37,7 +37,7 @@ document.addEventListener('keydown', (e) => {
 const navbar = document.querySelector('.navbar');
 const heroSection = document.querySelector('.hero-section');
 let lastScrollY = window.scrollY;
-let ticking = false;
+let navbarTicking = false;
 
 function updateNavbar() {
     const currentScrollY = window.scrollY;
@@ -58,13 +58,13 @@ function updateNavbar() {
     }
 
     lastScrollY = currentScrollY;
-    ticking = false;
+    navbarTicking = false;
 }
 
 // Use requestAnimationFrame for better performance
 window.addEventListener('scroll', () => {
-    if (!ticking) {
+    if (!navbarTicking) {
         window.requestAnimationFrame(updateNavbar);
-        ticking = true;
+        navbarTicking = true;
     }
 });

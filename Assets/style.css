@@ -204,7 +204,7 @@ p {
     width: 100%;
     background-image: url('./318de0e1-921b-4d68-8ad9-26fea3e07c2d.jfif');
     background-size: cover;
-    background-position: top;
+    background-position: 50% 30%;;
     background-repeat: no-repeat;
     filter: grayscale(100%);
     transition: filter var(--transition-base);

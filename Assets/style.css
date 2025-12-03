@@ -800,6 +800,7 @@ p {
 
     .nav-toggle.mobile {
         display: block;
+     
     }
 
     .team-card-image.desktop {
@@ -808,6 +809,7 @@ p {
 
     .team-card-image.mobile {
         display: block;
+               max-width: fit-content;
     }
 
     .team-card-image.mobile img {

@@ -1,0 +1,460 @@
+/* General CSS classes and variables used on all pages */
+
+/* ================================
+   Font Declarations
+   ================================ */
+
+/* HelveticaNowDisplay */
+@font-face {
+    font-family: 'HelveticaNowDisplay';
+    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelveticaNowDisplay';
+    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelveticaNowDisplay';
+    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-MediumIta.otf') format('opentype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelveticaNowDisplay';
+    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelveticaNowDisplay';
+    src: url('./fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Adobe Caslon Pro */
+@font-face {
+    font-family: 'ACaslonPro';
+    src: url('./fonts/AdobeCaslonPro/ACaslonPro-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ================================
+   CSS Variables
+   ================================ */
+:root {
+     /* Typography */
+    --font-heading: 'HelveticaNowDisplay', sans-serif;
+    --font-body: 'ACaslonPro', serif;
+    --font-heading-size: clamp(28px, 4vw, 48px);
+    --font-subheading-size: clamp(22px, 2.5vw, 35px);
+    --font-text-size: clamp(18px, 1.5vw, 21px);
+    --font-small-text-size: clamp(16px, 1.2vw, 19px);
+
+     /* Layout */
+    --max-width: 1380px;
+    --container-padding: 20px;
+
+    /* Spacing */
+    --section-spacing: 120px;
+    --section-spacing-mobile: 80px;
+    --card-spacing: 60px;
+    --card-spacing-mobile: 40px;
+
+    /* Navigation */
+    --nav-height: 80px;
+    --nav-height-mobile: 70px;
+
+    /* Colors */
+    --color-text: #000000;
+    --color-text-light: #6e6e6e;
+    --color-bg: #ffffff;
+    --color-bg-light: #f8f8f8;
+    --color-border: #d1d1d1;
+
+    /* Transitions */
+    --transition-base: 0.3s ease-in-out;
+}
+
+
+/* ================================
+   General Typography
+   ================================ */
+:root{
+       /* Typography */
+    --font-heading: 'HelveticaNowDisplay', sans-serif;
+    --font-body: 'ACaslonPro', serif;
+    --font-heading-size: clamp(28px, 4vw, 48px);
+    --font-subheading-size: clamp(22px, 2.5vw, 35px);
+    --font-text-size: clamp(18px, 1.5vw, 21px);
+    --font-small-text-size: clamp(16px, 1.2vw, 19px);
+}
+
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+}
+
+h1 {
+    font-size: var(--font-heading-size);
+}
+
+p {
+    font-family: var(--font-body);
+}
+
+
+/* ================================
+   Base Styles
+   ================================ */
+html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ================================
+   General Layout
+   ================================ */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* ================================
+   Navigation
+   ================================ */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--nav-height);
+    background-color: var(--color-bg);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: var(--max-width);
+    padding: 0 var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-logo {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo img {
+    height: 100%;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: color var(--transition-base);
+    position: relative;
+    text-transform: uppercase;
+
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-text);
+    transition: width var(--transition-base);
+}
+
+.nav-links a:hover {
+    color: var(--color-text-light);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none;
+    height: 45px;
+    width: 45px;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color var(--transition-base);
+    border-radius: 4px;
+}
+
+.nav-toggle:hover {
+    background-color: var(--color-bg-light);
+}
+
+.nav-toggle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ================================
+   Mobile Menu Modal
+   ================================ */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+    z-index: 998;
+    backdrop-filter: blur(2px);
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: var(--color-bg);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-menu-logo {
+    height: 40px;
+    width: auto;
+}
+
+.mobile-menu-close {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    transition: background-color var(--transition-base);
+    border-radius: 4px;
+}
+
+.mobile-menu-close:hover {
+    background-color: var(--color-bg-light);
+}
+
+.mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    flex: 1;
+}
+
+.mobile-menu-link {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-text);
+    padding: 20px 30px;
+    transition: background-color var(--transition-base), padding-left var(--transition-base);
+    border-left: 3px solid transparent;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link:active {
+    background-color: var(--color-bg-light);
+    padding-left: 35px;
+    border-left-color: var(--color-text);
+}
+
+/* ================================
+   Footer
+   ================================ */
+.footer {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 80px 0 0;
+}
+
+.footer-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    margin-bottom: 60px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.footer-heading {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 0 0 20px;
+    color: #ffffff;
+}
+
+.footer-column p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0;
+    color: #b0b0b0;
+}
+
+.footer-link {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: color var(--transition-base);
+    line-height: 1.8;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+}
+
+.footer-contact-link {
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+.footer-contact-link:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333;
+    padding: 30px var(--container-padding);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* ================================
+   Responsive Styles
+   ================================ */
+
+/* Hide mobile menu on desktop */
+@media screen and (min-width: 1001px) {
+    .mobile-menu,
+    .mobile-menu-overlay {
+        display: none;
+    }
+}
+
+/* Mobile navigation and general responsive adjustments */
+@media screen and (max-width: 1000px) {
+    :root {
+        --nav-height: var(--nav-height-mobile);
+        --section-spacing: var(--section-spacing-mobile);
+        --card-spacing: var(--card-spacing-mobile);
+    }
+
+    .nav-links.desktop {
+        display: none;
+    }
+
+    .nav-toggle.mobile {
+        display: block;
+    }
+
+    /* Footer responsive */
+    .footer {
+        padding: 60px 0 0;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+}

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balog Stoica - Societate Civilă Profesională de Avocați</title>
-    <link rel="stylesheet" href="./Assets/fonts.css">
+    <link rel="stylesheet" href="./Assets/general.css">
     <link rel="stylesheet" href="./Assets/style.css">
-    <link rel="icon" type="image/x-icon" href="./Assets/balog&stoica - favicon.webp">
+    <link rel="icon" type="image/x-icon" href="./Assets/Img/balog&stoica - favicon.webp">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <img src="./Assets/logo.svg" alt="Balog Stoica Logo">
+                <img src="./Assets/Img/logo.svg" alt="Balog Stoica Logo">
             </a>
             <div class="nav-links desktop">
                 <a href="#about">Despre noi</a>
@@ -24,7 +24,7 @@
                 <a href="#contact">Contact</a>
             </div>
             <button class="nav-toggle mobile" aria-label="Toggle navigation" id="menuToggle">
-                <img src="./Assets/Hamburger_icon.svg.png" alt="Menu">
+                <img src="./Assets/Img/Hamburger_icon.svg.png" alt="Menu">
             </button>
         </div>
     </nav>
@@ -33,7 +33,7 @@
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
-            <img src="./Assets/logo.svg" alt="Balog Stoica Logo" class="mobile-menu-logo">
+            <img src="./Assets/Img/logo.svg" alt="Balog Stoica Logo" class="mobile-menu-logo">
             <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -53,7 +53,7 @@
     <!-- Hero Section -->
     <section class="hero-section" id="home">
         <div class="logo-reveal">
-            <img src="./Assets/logo.svg" alt="Balog Stoica">
+            <img src="./Assets/Img/logo.svg" alt="Balog Stoica">
         </div>
         <div class="hero-background"></div>
     </section>
@@ -253,7 +253,7 @@
                             să se transforme în litigii. Contractele, negocierile și consultanța trebuie să fie
                             întotdeauna gândite pentru eficiență și siguranță juridică.
                         </p>
-                        </p>Litigiile sunt abordate cu aceeași dedicare profesională: fiecare caz implică analiză
+                        <p>Litigiile sunt abordate cu aceeași dedicare profesională: fiecare caz implică analiză
                         detaliată, evaluarea riscurilor și soluții personalizate, astfel încât rezultatele să fie
                         concrete și sustenabile. Profesionalismul și implicarea totală asigură că fiecare client
                         beneficiază de claritate și soluții eficiente.
@@ -293,21 +293,38 @@
         <div class="container">
             <h1 class="contact-title">Începe o discuție</h1>
 
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" novalidate>
                 <div class="form-group">
-                    <input type="text" name="name" placeholder="Nume și prenume*" required>
+                    <input type="text" id="name" name="name" placeholder="Nume și prenume*" required>
+                    <span class="error-message" id="nameError"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Adresă email">
+                    <input type="email" id="email" name="email" placeholder="Adresă email*" required>
+                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="tel" name="phone" placeholder="Număr telefon">
+                    <input type="tel" id="phone" name="phone" placeholder="Număr telefon" pattern="[0-9+\s\-()]{10,}">
+                    <span class="error-message" id="phoneError"></span>
                 </div>
 
                 <div class="form-group">
-                    <textarea name="message" rows="6" placeholder="Mesaj*" required></textarea>
+                    <textarea id="message" name="message" rows="6" placeholder="Mesaj*" required></textarea>
+                    <span class="error-message" id="messageError"></span>
+                </div>
+
+                <div class="form-group gdpr-checkbox">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="gdprConsent" name="gdprConsent" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">
+                            Am citit și sunt de acord cu
+                            <a href="PrivacyPolicy/index.html" target="_blank">Politica de confidențialitate</a>
+                            și permit prelucrarea datelor mele personale în conformitate cu GDPR.*
+                        </span>
+                    </label>
+                    <span class="error-message" id="gdprError"></span>
                 </div>
 
                 <button type="submit" class="submit-button">TRIMITE</button>
@@ -341,10 +358,8 @@
 
             <div class="footer-column">
                 <h3 class="footer-heading">LINK-URI UTILE</h3>
-                <a href="#" class="footer-link">Termeni și condiții
-                </a>
-                <a href="#" class="footer-link">Politica de confidențialitate
-                </a>
+                <a href="./ToS/index.html" class="footer-link">Termeni și condiții</a>
+                <a href="./PrivacyPolicy/index.html" class="footer-link">Politica de confidențialitate</a>
             </div>
 
         </div>
@@ -355,6 +370,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="./Assets/general.js"></script>
     <script src="./Assets/script.js"></script>
 
 </body>

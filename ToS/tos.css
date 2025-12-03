@@ -1,0 +1,73 @@
+.policy-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 80px) var(--container-padding) var(--section-spacing);
+}
+
+.policy-content h1 {
+    font-family: var(--font-heading);
+    font-size: var(--font-heading-size);
+    font-weight: bold;
+    margin: 0 0 20px;
+    color: var(--color-text);
+}
+
+.policy-content .subtitle {
+    font-family: var(--font-heading);
+    font-size: var(--font-subheading-size);
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+.policy-content .last-updated {
+    font-family: var(--font-body);
+    font-size: var(--font-small-text-size);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-bottom: 40px;
+}
+
+.policy-content h2 {
+    font-family: var(--font-heading);
+    font-size: var(--font-subheading-size);
+    font-weight: bold;
+    margin: 50px 0 20px;
+    color: var(--color-text);
+}
+
+.policy-content p,
+.policy-content ul {
+    font-family: var(--font-body);
+    font-size: var(--font-text-size);
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin: 0 0 20px;
+}
+
+.policy-content ul {
+    padding-left: 30px;
+}
+
+.policy-content li {
+    margin-bottom: 10px;
+}
+
+.policy-content strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.policy-content a {
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
+.policy-content a:hover {
+    color: var(--color-text-light);
+}
+
+@media screen and (max-width: 768px) {
+    .policy-content {
+        padding: calc(var(--nav-height-mobile) + 60px) var(--container-padding) var(--section-spacing-mobile);
+    }
+}

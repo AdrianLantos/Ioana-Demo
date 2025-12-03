@@ -940,7 +940,7 @@ p {
     }
 
     .section-title {
-        margin-bottom: 40px;
+       margin-bottom: var(--section-spacing-mobile);
     }
 
     .team-card {

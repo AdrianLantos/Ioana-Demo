@@ -109,7 +109,7 @@
     --font-body: 'ACaslonPro', serif;
     --font-heading-size: clamp(28px, 4vw, 48px);
     --font-subheading-size: clamp(22px, 2.5vw, 35px);
-    --font-text-size: clamp(18px, 1.5vw, 21px);
+    --font-text-size: clamp(18px, 1.4vw, 20px);
     --font-small-text-size: clamp(16px, 1.2vw, 19px);
 }
 

@@ -22,36 +22,56 @@
  *    - Auto-focus on first error field
  *    - All error messages in Romanian
  *
+ * 4. LOGO CLICK ANIMATION
+ *    - Click/tap detection with scroll gesture differentiation
+ *    - Smooth scroll animation to move logo out of view
+ *
  * Browser Support: Modern browsers with ES6 support
  * Dependencies: None (vanilla JavaScript)
  *
  * ====================================================================
  */
 
-/**
- * ===== TEAM SECTION HORIZONTAL SCROLL =====
- *
- * This section handles the horizontal scrolling effect for the team section.
- * As the user scrolls vertically through the page, the team content scrolls horizontally
- * within a fixed viewport, creating a parallax-like effect.
- */
+// ===== DOM ELEMENT REFERENCES =====
 
-// DOM element references for the team section
+// Team section elements
 const teamWrapper = document.querySelector('.team-section');
 const teamStickyWrapper = document.querySelector('.team-sticky-wrapper');
 const teamHorizontal = document.getElementById('team-sticky-content');
 
+// Services section elements
+const servicesWrapper = document.querySelector('.services-section');
+const servicesStickyWrapper = document.querySelector('.services-sticky-wrapper');
+const servicesHorizontal = document.getElementById('services-sticky-content');
+
+// Contact form elements
+const contactForm = document.getElementById('contactForm');
+const nameInput = contactForm ? document.getElementById('name') : null;
+const emailInput = contactForm ? document.getElementById('email') : null;
+const phoneInput = contactForm ? document.getElementById('phone') : null;
+const messageInput = contactForm ? document.getElementById('message') : null;
+const gdprConsent = contactForm ? document.getElementById('gdprConsent') : null;
+const nameError = contactForm ? document.getElementById('nameError') : null;
+const emailError = contactForm ? document.getElementById('emailError') : null;
+const phoneError = contactForm ? document.getElementById('phoneError') : null;
+const messageError = contactForm ? document.getElementById('messageError') : null;
+const gdprError = contactForm ? document.getElementById('gdprError') : null;
+
+// Logo click animation elements
+const logoReveal = document.querySelector('.logo-reveal');
+
+// ===== HORIZONTAL SCROLL FUNCTIONS =====
+
 /**
  * Updates the horizontal scroll position of the team section based on vertical scroll.
  *
- * This function creates a scroll-linked animation where vertical scrolling translates
- * to horizontal movement of content. The animation only occurs within a specific scroll
- * range (20%-80% of the section's height) for better timing and user experience.
- *
- * The function operates in three phases:
+ * Creates a scroll-linked animation where vertical scrolling translates to horizontal movement.
+ * The animation operates in three phases:
  * 1. Before start threshold (0-20%): Content stays at initial position
- * 2. Active zone (20%-80%): Content scrolls horizontally
+ * 2. Active zone (20%-80%): Content scrolls horizontally based on progress
  * 3. After end threshold (80%-100%): Content stays at final position
+ *
+ * On mobile (viewport ≤ 768px), horizontal scrolling is disabled and content displays normally.
  *
  * @returns {void}
  */
@@ -60,7 +80,6 @@ function updateTeamScroll() {
     if (!teamWrapper || !teamHorizontal || !teamStickyWrapper) return;
 
     // Disable horizontal scroll on mobile devices (viewport width ≤ 768px)
-    // Mobile users will see standard vertical scrolling instead
     if (window.innerWidth <= 768) {
         teamHorizontal.style.transform = 'translateX(0px)';
         return;
@@ -71,57 +90,41 @@ function updateTeamScroll() {
     const wrapperHeight = teamWrapper.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Horizontal scroll should only happen while section is "active"
-    // Active means: section has scrolled past top of viewport AND hasn't fully scrolled past bottom
+    // Section is in active scroll zone (scrolled past top but not past bottom)
     if (rect.top <= 0 && rect.bottom >= windowHeight) {
-
-        // Step 1: Calculate base scroll progress (0 to 1)
-        // When rect.top is 0 (section just reaches top), progress = 0
-        // When rect.top is -(wrapperHeight - windowHeight), progress = 1
+        // Calculate base scroll progress (0 to 1)
         let baseProgress = -rect.top / (wrapperHeight - windowHeight);
-
-        // Step 2: Clamp progress to valid range [0, 1] to prevent overflow
         baseProgress = Math.max(0, Math.min(1, baseProgress));
 
-        // Step 3: Define animation window within the scroll range
-        // Animation only occurs between 20% and 80% of total scroll
-        // This creates buffer zones at start and end for smoother experience
-        const start = 0.2;  // Animation starts at 20% scroll
-        const end = 0.8;    // Animation ends at 80% scroll
+        // Define animation window (20% to 80% of total scroll)
+        const start = 0.2;
+        const end = 0.8;
 
-        // Before animation start zone: keep content at initial position
+        // Before animation window: keep content at initial position
         if (baseProgress <= start) {
-            teamHorizontal.style.transform = `translateX(0px)`;
+            teamHorizontal.style.transform = 'translateX(0px)';
             return;
         }
 
-        // After animation end zone: keep content at final position
+        // After animation window: keep content at final position
         if (baseProgress >= end) {
-            const stickyWidth = teamStickyWrapper.offsetWidth;    // Visible container width
-            const contentWidth = teamHorizontal.scrollWidth;       // Total content width
-            const maxTranslate = Math.max(0, contentWidth - stickyWidth);  // Maximum scroll distance
+            const stickyWidth = teamStickyWrapper.offsetWidth;
+            const contentWidth = teamHorizontal.scrollWidth;
+            const maxTranslate = Math.max(0, contentWidth - stickyWidth);
             teamHorizontal.style.transform = `translateX(-${maxTranslate}px)`;
             return;
         }
 
-        // Step 4: Re-normalize progress to 0-1 within the animation zone (0.2 to 0.8)
-        // This maps the 20%-80% range to 0%-100% for smooth animation
+        // Within animation window: apply smooth horizontal scroll
         const mappedProgress = (baseProgress - start) / (end - start);
-
-        // Step 5: Calculate and apply horizontal scroll transformation
-        const stickyWidth = teamStickyWrapper.offsetWidth;      // Visible container width
-        const contentWidth = teamHorizontal.scrollWidth;         // Total content width including overflow
-        const maxTranslate = Math.max(0, contentWidth - stickyWidth);  // Maximum horizontal scroll distance
-        const translateX = mappedProgress * maxTranslate;        // Current scroll position based on progress
-
-        // Apply the horizontal translation (negative value scrolls content left)
+        const stickyWidth = teamStickyWrapper.offsetWidth;
+        const contentWidth = teamHorizontal.scrollWidth;
+        const maxTranslate = Math.max(0, contentWidth - stickyWidth);
+        const translateX = mappedProgress * maxTranslate;
         teamHorizontal.style.transform = `translateX(-${translateX}px)`;
     } else {
-        // Reset position when section is out of active view
-
         // Section has scrolled completely past the viewport (above it)
         if (rect.bottom < 0) {
-            // Set to final position (fully scrolled)
             const stickyWidth = teamStickyWrapper.offsetWidth;
             const contentWidth = teamHorizontal.scrollWidth;
             const maxTranslate = Math.max(0, contentWidth - stickyWidth);
@@ -129,61 +132,17 @@ function updateTeamScroll() {
         }
         // Section hasn't reached the viewport yet (below it)
         else if (rect.top > windowHeight) {
-            // Set to initial position (not scrolled)
-            teamHorizontal.style.transform = `translateX(0px)`;
+            teamHorizontal.style.transform = 'translateX(0px)';
         }
     }
 }
 
 /**
- * Scroll event listener with requestAnimationFrame throttling.
- *
- * Uses the "ticking" pattern to throttle scroll events and ensure updates
- * only happen once per animation frame. This improves performance by preventing
- * excessive function calls during rapid scrolling.
- *
- * The pattern works as follows:
- * 1. User scrolls → event fires
- * 2. If not already scheduled (ticking = false), schedule an animation frame
- * 3. Set ticking = true to prevent additional scheduling
- * 4. On next frame: run updates and reset ticking to false
- */
-let ticking = false;
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        // Schedule updates for the next animation frame (typically 60fps)
-        window.requestAnimationFrame(() => {
-            updateTeamScroll();
-            updateServicesScroll();
-            ticking = false;  // Allow new updates to be scheduled
-        });
-        ticking = true;  // Prevent additional scheduling until current update completes
-    }
-});
-
-/**
- * ===== SERVICES SECTION HORIZONTAL SCROLL =====
- *
- * This section handles the horizontal scrolling effect for the services section.
- * Functions identically to the team section but with a higher viewport breakpoint (1000px)
- * to accommodate the different content layout requirements.
- */
-
-// DOM element references for the services section
-const servicesWrapper = document.querySelector('.services-section');
-const servicesStickyWrapper = document.querySelector('.services-sticky-wrapper');
-const servicesHorizontal = document.getElementById('services-sticky-content');
-
-/**
  * Updates the horizontal scroll position of the services section based on vertical scroll.
  *
- * This function mirrors the team section scroll behavior but is optimized for
- * the services section layout. The animation creates a synchronized horizontal
- * scroll effect triggered by vertical page scrolling.
- *
- * Key differences from team section:
- * - Breakpoint is 1000px instead of 768px (different content width requirements)
- * - Otherwise uses identical scroll logic and animation timing
+ * Mirrors the team section scroll behavior but is optimized for the services section layout.
+ * Uses identical scroll logic with the following key difference:
+ * - Breakpoint is 1000px instead of 768px (due to wider service cards)
  *
  * @returns {void}
  */
@@ -192,7 +151,6 @@ function updateServicesScroll() {
     if (!servicesWrapper || !servicesHorizontal || !servicesStickyWrapper) return;
 
     // Disable horizontal scroll on smaller devices (viewport width ≤ 1000px)
-    // Higher threshold than team section due to wider service cards
     if (window.innerWidth <= 1000) {
         servicesHorizontal.style.transform = 'translateX(0px)';
         return;
@@ -203,57 +161,41 @@ function updateServicesScroll() {
     const wrapperHeight = servicesWrapper.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Horizontal scroll should only happen while section is "active"
-    // Active means: section has scrolled past top of viewport AND hasn't fully scrolled past bottom
+    // Section is in active scroll zone (scrolled past top but not past bottom)
     if (rect.top <= 0 && rect.bottom >= windowHeight) {
-
-        // Step 1: Calculate base scroll progress (0 to 1)
-        // When rect.top is 0 (section just reaches top), progress = 0
-        // When rect.top is -(wrapperHeight - windowHeight), progress = 1
+        // Calculate base scroll progress (0 to 1)
         let baseProgress = -rect.top / (wrapperHeight - windowHeight);
-
-        // Step 2: Clamp progress to valid range [0, 1] to prevent overflow
         baseProgress = Math.max(0, Math.min(1, baseProgress));
 
-        // Step 3: Define animation window within the scroll range
-        // Animation only occurs between 20% and 80% of total scroll
-        // This creates buffer zones at start and end for smoother experience
-        const start = 0.2;  // Animation starts at 20% scroll
-        const end = 0.8;    // Animation ends at 80% scroll
+        // Define animation window (20% to 80% of total scroll)
+        const start = 0.2;
+        const end = 0.8;
 
-        // Before animation start zone: keep content at initial position
+        // Before animation window: keep content at initial position
         if (baseProgress <= start) {
-            servicesHorizontal.style.transform = `translateX(0px)`;
+            servicesHorizontal.style.transform = 'translateX(0px)';
             return;
         }
 
-        // After animation end zone: keep content at final position
+        // After animation window: keep content at final position
         if (baseProgress >= end) {
-            const stickyWidth = servicesStickyWrapper.offsetWidth;    // Visible container width
-            const contentWidth = servicesHorizontal.scrollWidth;       // Total content width
-            const maxTranslate = Math.max(0, contentWidth - stickyWidth);  // Maximum scroll distance
+            const stickyWidth = servicesStickyWrapper.offsetWidth;
+            const contentWidth = servicesHorizontal.scrollWidth;
+            const maxTranslate = Math.max(0, contentWidth - stickyWidth);
             servicesHorizontal.style.transform = `translateX(-${maxTranslate}px)`;
             return;
         }
 
-        // Step 4: Re-normalize progress to 0-1 within the animation zone (0.2 to 0.8)
-        // This maps the 20%-80% range to 0%-100% for smooth animation
+        // Within animation window: apply smooth horizontal scroll
         const mappedProgress = (baseProgress - start) / (end - start);
-
-        // Step 5: Calculate and apply horizontal scroll transformation
-        const stickyWidth = servicesStickyWrapper.offsetWidth;      // Visible container width
-        const contentWidth = servicesHorizontal.scrollWidth;         // Total content width including overflow
-        const maxTranslate = Math.max(0, contentWidth - stickyWidth);  // Maximum horizontal scroll distance
-        const translateX = mappedProgress * maxTranslate;        // Current scroll position based on progress
-
-        // Apply the horizontal translation (negative value scrolls content left)
+        const stickyWidth = servicesStickyWrapper.offsetWidth;
+        const contentWidth = servicesHorizontal.scrollWidth;
+        const maxTranslate = Math.max(0, contentWidth - stickyWidth);
+        const translateX = mappedProgress * maxTranslate;
         servicesHorizontal.style.transform = `translateX(-${translateX}px)`;
     } else {
-        // Reset position when section is out of active view
-
         // Section has scrolled completely past the viewport (above it)
         if (rect.bottom < 0) {
-            // Set to final position (fully scrolled)
             const stickyWidth = servicesStickyWrapper.offsetWidth;
             const contentWidth = servicesHorizontal.scrollWidth;
             const maxTranslate = Math.max(0, contentWidth - stickyWidth);
@@ -261,19 +203,288 @@ function updateServicesScroll() {
         }
         // Section hasn't reached the viewport yet (below it)
         else if (rect.top > windowHeight) {
-            // Set to initial position (not scrolled)
-            servicesHorizontal.style.transform = `translateX(0px)`;
+            servicesHorizontal.style.transform = 'translateX(0px)';
         }
     }
 }
 
+// ===== CONTACT FORM VALIDATION FUNCTIONS =====
+
+/**
+ * Displays an error message for a form field and marks it as invalid.
+ *
+ * @param {HTMLElement} input - The input element that has the error
+ * @param {HTMLElement} errorElement - The element where error message will be displayed
+ * @param {string} message - The error message to display to the user
+ * @returns {void}
+ */
+function showError(input, errorElement, message) {
+    input.classList.add('invalid');
+    errorElement.textContent = message;
+}
+
+/**
+ * Clears the error state and message for a form field.
+ *
+ * @param {HTMLElement} input - The input element to clear error from
+ * @param {HTMLElement} errorElement - The error message element to clear
+ * @returns {void}
+ */
+function clearError(input, errorElement) {
+    input.classList.remove('invalid');
+    errorElement.textContent = '';
+}
+
+/**
+ * Validates the name input field.
+ *
+ * Validation rules:
+ * - Field cannot be empty
+ * - Must contain at least 2 characters (after trimming whitespace)
+ *
+ * @returns {boolean} True if validation passes, false otherwise
+ */
+function validateName() {
+    const name = nameInput.value.trim();
+    if (name === '') {
+        showError(nameInput, nameError, 'Numele este obligatoriu.');
+        return false;
+    }
+    if (name.length < 2) {
+        showError(nameInput, nameError, 'Numele trebuie să conțină cel puțin 2 caractere.');
+        return false;
+    }
+    clearError(nameInput, nameError);
+    return true;
+}
+
+/**
+ * Validates the email input field.
+ *
+ * Validation rules:
+ * - Field cannot be empty
+ * - Must match standard email format (local@domain.tld)
+ * - No whitespace allowed anywhere in the email
+ *
+ * @returns {boolean} True if validation passes, false otherwise
+ */
+function validateEmail() {
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === '') {
+        showError(emailInput, emailError, 'Adresa de email este obligatorie.');
+        return false;
+    }
+    if (!emailRegex.test(email)) {
+        showError(emailInput, emailError, 'Vă rugăm să introduceți o adresă de email validă.');
+        return false;
+    }
+    clearError(emailInput, emailError);
+    return true;
+}
+
+/**
+ * Validates the phone input field.
+ *
+ * Validation rules:
+ * - Field is OPTIONAL (empty is valid)
+ * - If provided, must contain at least 10 digits
+ * - Allows formatting characters: +, spaces, hyphens, and parentheses
+ *
+ * Valid format examples:
+ * - 0723456789
+ * - +40 723 456 789
+ * - (07) 2345-6789
+ * - +40-723-456-789
+ *
+ * @returns {boolean} True if validation passes, false otherwise
+ */
+function validatePhone() {
+    const phone = phoneInput.value.trim();
+
+    if (phone !== '') {
+        const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+        if (!phoneRegex.test(phone)) {
+            showError(phoneInput, phoneError, 'Vă rugăm să introduceți un număr de telefon valid (minim 10 cifre).');
+            return false;
+        }
+    }
+    clearError(phoneInput, phoneError);
+    return true;
+}
+
+/**
+ * Validates the message textarea field.
+ *
+ * Validation rules:
+ * - Field cannot be empty
+ * - Must contain at least 10 characters (after trimming whitespace)
+ * - Ensures users provide meaningful messages, not just single words
+ *
+ * @returns {boolean} True if validation passes, false otherwise
+ */
+function validateMessage() {
+    const message = messageInput.value.trim();
+
+    if (message === '') {
+        showError(messageInput, messageError, 'Mesajul este obligatoriu.');
+        return false;
+    }
+    if (message.length < 10) {
+        showError(messageInput, messageError, 'Mesajul trebuie să conțină cel puțin 10 caractere.');
+        return false;
+    }
+    clearError(messageInput, messageError);
+    return true;
+}
+
+/**
+ * Validates the GDPR consent checkbox.
+ *
+ * Validation rules:
+ * - Checkbox must be checked
+ * - Required for GDPR compliance before processing user data
+ *
+ * @returns {boolean} True if checkbox is checked, false otherwise
+ */
+function validateGdpr() {
+    if (!gdprConsent.checked) {
+        showError(gdprConsent, gdprError, 'Trebuie să acceptați politica de confidențialitate pentru a trimite formularul.');
+        return false;
+    }
+    clearError(gdprConsent, gdprError);
+    return true;
+}
+
+/**
+ * Handles form submission with comprehensive validation.
+ *
+ * Process:
+ * 1. Prevents default form submission to handle validation client-side
+ * 2. Runs all validation functions
+ * 3. If all pass: logs data and shows success message (placeholder for actual submission)
+ * 4. If any fail: scrolls to and focuses on the first invalid field
+ *
+ * @param {Event} e - The form submit event
+ * @returns {void}
+ */
+function handleFormSubmit(e) {
+    e.preventDefault();
+
+    // Run all validation functions
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isMessageValid = validateMessage();
+    const isGdprValid = validateGdpr();
+
+    // Check if all validations passed
+    if (isNameValid && isEmailValid && isPhoneValid && isMessageValid && isGdprValid) {
+        // Form is valid - log data and show success message
+        // TODO: Code for submission here
+        console.log('Form is valid and ready to submit');
+        console.log({
+            name: nameInput.value,
+            email: emailInput.value,
+            phone: phoneInput.value,
+            message: messageInput.value,
+            gdprConsent: gdprConsent.checked
+        });
+
+        alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
+        contactForm.reset();
+    } else {
+        // Validation failed - scroll to and focus on first error
+        const firstError = contactForm.querySelector('.invalid');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus();
+        }
+    }
+}
+
+// ===== LOGO CLICK ANIMATION FUNCTIONS =====
+
+/**
+ * Stores the starting position and time of a user interaction.
+ * Used to distinguish between clicks/taps and scroll gestures.
+ * @type {{x: number, y: number, time: number}}
+ */
+let startPos = { x: 0, y: 0, time: 0 };
+
+/**
+ * Handles the start of a user interaction (mouse down or touch start).
+ * Records the starting position and timestamp for later comparison.
+ *
+ * @param {MouseEvent|TouchEvent} e - The mouse or touch event
+ * @returns {void}
+ */
+function handleInteractionStart(e) {
+    const point = e.touches?.[0] || e;
+    startPos = { x: point.clientX, y: point.clientY, time: Date.now() };
+}
+
+/**
+ * Handles the end of a user interaction (mouse up or touch end).
+ * Determines if the interaction was a click/tap or a scroll gesture.
+ *
+ * If the interaction qualifies as a click/tap (movement < 10px and duration < 500ms),
+ * it smoothly scrolls the page to move the logo out of view.
+ *
+ * @param {MouseEvent|TouchEvent} e - The mouse or touch event
+ * @returns {void}
+ */
+function handleInteractionEnd(e) {
+    const point = e.changedTouches?.[0] || e;
+    const dx = point.clientX - startPos.x;
+    const dy = point.clientY - startPos.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const duration = Date.now() - startPos.time;
+
+    // Trigger scroll animation only for quick clicks/taps with minimal movement
+    if (distance < 10 && duration < 500) {
+        window.scrollTo({
+            top: logoReveal.offsetHeight,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// ===== EVENT LISTENERS =====
+
+/**
+ * Flag to track if a scroll update is already scheduled.
+ * Prevents multiple simultaneous requestAnimationFrame calls.
+ * @type {boolean}
+ */
+let ticking = false;
+
+/**
+ * Throttled scroll event listener using requestAnimationFrame.
+ *
+ * Uses the "ticking" pattern to ensure updates only happen once per animation frame,
+ * improving performance by preventing excessive function calls during rapid scrolling.
+ *
+ * Updates both team and services horizontal scroll positions.
+ */
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            updateTeamScroll();
+            updateServicesScroll();
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
 
 /**
  * Initialize scroll positions on page load.
  *
- * This ensures that horizontal scroll sections are positioned correctly
- * if the page loads at a scroll position other than the top (e.g., when
- * user refreshes mid-page or uses browser back button).
+ * Ensures that horizontal scroll sections are positioned correctly if the page
+ * loads at a scroll position other than the top (e.g., when user refreshes mid-page
+ * or uses browser back button).
  */
 window.addEventListener('load', () => {
     updateTeamScroll();
@@ -281,7 +492,13 @@ window.addEventListener('load', () => {
 });
 
 /**
- * Handle window resize events with debouncing.
+ * Timeout ID for debounced resize handler.
+ * @type {number|undefined}
+ */
+let resizeTimeout;
+
+/**
+ * Debounced resize event handler.
  *
  * Debouncing prevents excessive recalculations during continuous resize events
  * (e.g., when user drags window edge). The function waits 150ms after the last
@@ -291,336 +508,64 @@ window.addEventListener('load', () => {
  * - Viewport width changes that might trigger/disable horizontal scrolling
  * - Container width changes that affect scroll distance calculations
  */
-let resizeTimeout;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);  // Cancel previous pending recalculation
+    clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        // Only execute after 150ms of no resize events
         updateTeamScroll();
         updateServicesScroll();
     }, 150);
 });
 
 /**
- * ===== CONTACT FORM VALIDATION =====
+ * Contact form event listeners.
  *
- * This section handles client-side validation for the contact form.
- * It provides real-time feedback to users and prevents invalid submissions.
- *
- * Features:
- * - Real-time validation on blur (when user leaves a field)
- * - Immediate feedback when correcting errors
- * - GDPR consent checkbox validation
- * - Comprehensive error messages in Romanian
- * - Auto-scroll to first error on submit
+ * Sets up validation triggers:
+ * - Blur validation: Validates when user leaves a field
+ * - Input validation: Re-validates only if field is already marked invalid (for real-time feedback)
+ * - Submit handler: Comprehensive validation before form submission
  */
-
-// Main form element reference
-const contactForm = document.getElementById('contactForm');
-
 if (contactForm) {
-    // Input field references
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const messageInput = document.getElementById('message');
-    const gdprConsent = document.getElementById('gdprConsent');
-
-    // Error message element references
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const phoneError = document.getElementById('phoneError');
-    const messageError = document.getElementById('messageError');
-    const gdprError = document.getElementById('gdprError');
-
-    /**
-     * ===== VALIDATION FUNCTIONS =====
-     */
-
-    /**
-     * Validates the name input field.
-     *
-     * Validation rules:
-     * - Field cannot be empty
-     * - Must contain at least 2 characters (after trimming whitespace)
-     *
-     * @returns {boolean} True if validation passes, false otherwise
-     */
-    function validateName() {
-        const name = nameInput.value.trim();
-        if (name === '') {
-            showError(nameInput, nameError, 'Numele este obligatoriu.');
-            return false;
-        } else if (name.length < 2) {
-            showError(nameInput, nameError, 'Numele trebuie să conțină cel puțin 2 caractere.');
-            return false;
-        } else {
-            clearError(nameInput, nameError);
-            return true;
-        }
-    }
-
-    /**
-     * Validates the email input field.
-     *
-     * Validation rules:
-     * - Field cannot be empty
-     * - Must match standard email format (local@domain.tld)
-     *
-     * Uses a regex pattern that checks for:
-     * - At least one character before @
-     * - At least one character between @ and .
-     * - At least one character after the final .
-     * - No whitespace anywhere in the email
-     *
-     * @returns {boolean} True if validation passes, false otherwise
-     */
-    function validateEmail() {
-        const email = emailInput.value.trim();
-        // Email validation regex: ensures basic email structure
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (email === '') {
-            showError(emailInput, emailError, 'Adresa de email este obligatorie.');
-            return false;
-        } else if (!emailRegex.test(email)) {
-            showError(emailInput, emailError, 'Vă rugăm să introduceți o adresă de email validă.');
-            return false;
-        } else {
-            clearError(emailInput, emailError);
-            return true;
-        }
-    }
-
-    /**
-     * Validates the phone input field.
-     *
-     * Validation rules:
-     * - Field is OPTIONAL (empty is valid)
-     * - If provided, must contain at least 10 digits
-     * - Allows formatting characters: +, spaces, hyphens, and parentheses
-     *
-     * Examples of valid formats:
-     * - 0723456789
-     * - +40 723 456 789
-     * - (07) 2345-6789
-     * - +40-723-456-789
-     *
-     * @returns {boolean} True if validation passes, false otherwise
-     */
-    function validatePhone() {
-        const phone = phoneInput.value.trim();
-
-        // Phone is optional, but if provided, it should be valid
-        if (phone !== '') {
-            // Regex allows digits, +, spaces, hyphens, and parentheses (minimum 10 characters)
-            const phoneRegex = /^[0-9+\s\-()]{10,}$/;
-            if (!phoneRegex.test(phone)) {
-                showError(phoneInput, phoneError, 'Vă rugăm să introduceți un număr de telefon valid (minim 10 cifre).');
-                return false;
-            }
-        }
-        clearError(phoneInput, phoneError);
-        return true;
-    }
-
-    /**
-     * Validates the message textarea field.
-     *
-     * Validation rules:
-     * - Field cannot be empty
-     * - Must contain at least 10 characters (after trimming whitespace)
-     * - This ensures users provide meaningful messages, not just single words
-     *
-     * @returns {boolean} True if validation passes, false otherwise
-     */
-    function validateMessage() {
-        const message = messageInput.value.trim();
-
-        if (message === '') {
-            showError(messageInput, messageError, 'Mesajul este obligatoriu.');
-            return false;
-        } else if (message.length < 10) {
-            showError(messageInput, messageError, 'Mesajul trebuie să conțină cel puțin 10 caractere.');
-            return false;
-        } else {
-            clearError(messageInput, messageError);
-            return true;
-        }
-    }
-
-    /**
-     * Validates the GDPR consent checkbox.
-     *
-     * Validation rules:
-     * - Checkbox must be checked
-     * - This is required for GDPR compliance before processing user data
-     *
-     * @returns {boolean} True if checkbox is checked, false otherwise
-     */
-    function validateGdpr() {
-        if (!gdprConsent.checked) {
-            showError(gdprConsent, gdprError, 'Trebuie să acceptați politica de confidențialitate pentru a trimite formularul.');
-            return false;
-        } else {
-            clearError(gdprConsent, gdprError);
-            return true;
-        }
-    }
-
-    /**
-     * Displays an error message for a form field.
-     *
-     * @param {HTMLElement} input - The input element that has the error
-     * @param {HTMLElement} errorElement - The element where error message will be displayed
-     * @param {string} message - The error message to display
-     * @returns {void}
-     */
-    function showError(input, errorElement, message) {
-        input.classList.add('invalid');  // Add visual styling to indicate error
-        errorElement.textContent = message;  // Display error message to user
-    }
-
-    /**
-     * Clears the error state and message for a form field.
-     *
-     * @param {HTMLElement} input - The input element to clear error from
-     * @param {HTMLElement} errorElement - The error message element to clear
-     * @returns {void}
-     */
-    function clearError(input, errorElement) {
-        input.classList.remove('invalid');  // Remove error styling
-        errorElement.textContent = '';  // Clear error message
-    }
-
-    /**
-     * ===== EVENT LISTENERS FOR REAL-TIME VALIDATION =====
-     */
-
-    /**
-     * Validate fields when user leaves them (blur event).
-     * This provides immediate feedback after the user finishes entering data.
-     */
+    // Blur validation - validates when user leaves a field
     nameInput.addEventListener('blur', validateName);
     emailInput.addEventListener('blur', validateEmail);
     phoneInput.addEventListener('blur', validatePhone);
     messageInput.addEventListener('blur', validateMessage);
-    // Use 'change' for checkbox instead of 'blur' for better UX
     gdprConsent.addEventListener('change', validateGdpr);
 
-    /**
-     * Re-validate fields as user types (input event), but only if field is already marked invalid.
-     * This allows users to see errors clear in real-time as they correct them,
-     * without being annoying by showing errors while they're still typing initially.
-     */
+    // Real-time validation for fields with errors
+    // Only validates if field is already marked invalid, preventing annoying premature errors
     nameInput.addEventListener('input', () => {
-        // Only validate if field already has an error
-        if (nameInput.classList.contains('invalid')) {
-            validateName();
-        }
+        if (nameInput.classList.contains('invalid')) validateName();
     });
 
     emailInput.addEventListener('input', () => {
-        // Only validate if field already has an error
-        if (emailInput.classList.contains('invalid')) {
-            validateEmail();
-        }
+        if (emailInput.classList.contains('invalid')) validateEmail();
     });
 
     phoneInput.addEventListener('input', () => {
-        // Only validate if field already has an error
-        if (phoneInput.classList.contains('invalid')) {
-            validatePhone();
-        }
+        if (phoneInput.classList.contains('invalid')) validatePhone();
     });
 
     messageInput.addEventListener('input', () => {
-        // Only validate if field already has an error
-        if (messageInput.classList.contains('invalid')) {
-            validateMessage();
-        }
+        if (messageInput.classList.contains('invalid')) validateMessage();
     });
 
-    /**
-     * ===== FORM SUBMISSION HANDLER =====
-     */
+    // Form submission handler
+    contactForm.addEventListener('submit', handleFormSubmit);
+}
 
-    /**
-     * Handle form submission with comprehensive validation.
-     *
-     * Process:
-     * 1. Prevent default form submission to handle validation client-side
-     * 2. Run all validation functions
-     * 3. If all pass: log data and show success message (placeholder for actual submission)
-     * 4. If any fail: scroll to and focus on the first invalid field
-     *
-     * @param {Event} e - The form submit event
-     */
-    contactForm.addEventListener('submit', function(e) {
-        // Prevent default form submission (page refresh)
-        e.preventDefault();
-
-        // Run all validation functions and store results
-        const isNameValid = validateName();
-        const isEmailValid = validateEmail();
-        const isPhoneValid = validatePhone();
-        const isMessageValid = validateMessage();
-        const isGdprValid = validateGdpr();
-
-        // Check if all validations passed
-        if (isNameValid && isEmailValid && isPhoneValid && isMessageValid && isGdprValid) {
-            // === SUCCESSFUL VALIDATION ===
-            // Here you would normally send the form data to your server
-            // For now, we'll just log it and show a success message
-            console.log('Form is valid and ready to submit');
-            console.log({
-                name: nameInput.value,
-                email: emailInput.value,
-                phone: phoneInput.value,
-                message: messageInput.value,
-                gdprConsent: gdprConsent.checked
-            });
-
-            // TODO: Add actual form submission logic here
-            // Example implementation:
-            /*
-            fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: nameInput.value,
-                    email: emailInput.value,
-                    phone: phoneInput.value,
-                    message: messageInput.value,
-                    gdprConsent: gdprConsent.checked
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
-                contactForm.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('A apărut o eroare. Vă rugăm să încercați din nou.');
-            });
-            */
-
-            // Show success message and reset form
-            alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
-            contactForm.reset();
-        } else {
-            // === VALIDATION FAILED ===
-            // Find the first invalid field in the form
-            const firstError = contactForm.querySelector('.invalid');
-            if (firstError) {
-                // Scroll to the field smoothly and center it in viewport
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // Set focus to the field so user can immediately start correcting
-                firstError.focus();
-            }
-        }
-    });
+/**
+ * Logo click animation event listeners.
+ *
+ * Handles both mouse and touch events to support desktop and mobile devices.
+ * The { passive: true } option on touch events improves scroll performance.
+ *
+ * Also sets cursor style to indicate the element is clickable.
+ */
+if (logoReveal) {
+    logoReveal.addEventListener('mousedown', handleInteractionStart);
+    logoReveal.addEventListener('mouseup', handleInteractionEnd);
+    logoReveal.addEventListener('touchstart', handleInteractionStart, { passive: true });
+    logoReveal.addEventListener('touchend', handleInteractionEnd, { passive: true });
+    logoReveal.style.cursor = 'pointer';
 }

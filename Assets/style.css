@@ -113,7 +113,6 @@
     position: relative;
     overflow-x: clip;
     max-width: 100%;
-    justify-items: center;
 }
 
 .team-sticky-wrapper {
@@ -124,7 +123,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 5%;
-        max-width: var(--max-width);
+    max-width: var(--max-width);
+    margin: 0 auto;
 
 }
 
@@ -149,9 +149,6 @@
     height: fit-content;
 }
 
-#rares-card {
-    padding-left: 30px;
-}
 
 .team-card-content {
     flex: 1;
@@ -688,11 +685,6 @@
     .team-member-contact {
         flex-direction: column;
 
-    }
-
-
-    #rares-card {
-        padding: 0;
     }
 
     .contact-form {

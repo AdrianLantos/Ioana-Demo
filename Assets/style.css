@@ -62,6 +62,21 @@
     max-width: 1380px;
 }
 
+.section-title .word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.section-title .char {
+    display: inline-block;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.section-title .char.space {
+    white-space: pre;
+}
+
 .values-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

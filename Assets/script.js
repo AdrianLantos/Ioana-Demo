@@ -34,6 +34,9 @@
 
 // ===== DOM ELEMENT REFERENCES =====
 
+// About section elements
+const sectionTitle = document.querySelector('.section-title');
+
 // Team section elements
 const teamWrapper = document.querySelector('.team-section');
 const teamStickyWrapper = document.querySelector('.team-sticky-wrapper');
@@ -59,6 +62,117 @@ const gdprError = contactForm ? document.getElementById('gdprError') : null;
 
 // Logo click animation elements
 const logoReveal = document.querySelector('.logo-reveal');
+
+// ===== CHARACTER ANIMATION FUNCTIONS =====
+
+/**
+ * Configuration for character animation.
+ * Adjust these values to control when and how the animation occurs.
+ */
+const charAnimationConfig = {
+    // Start animation when element top is at this % of viewport height from top (1.0 = bottom, 0.0 = top)
+    startScrollPercent: 0.7,
+    // End animation when element top is at this % of viewport height from top
+    endScrollPercent: 0.25,
+    // Minimum opacity (starting value)
+    minOpacity: 0.3,
+    // Maximum opacity (ending value)
+    maxOpacity: 1.0
+};
+
+/**
+ * Wraps each character in the section title with a span for individual animation.
+ * Words are wrapped in word containers to prevent breaking across lines.
+ * Spaces are preserved between words.
+ *
+ * @returns {void}
+ */
+function initCharacterAnimation() {
+    if (!sectionTitle) return;
+
+    const text = sectionTitle.textContent;
+    sectionTitle.textContent = '';
+
+    // Split by words (preserve spaces)
+    const words = text.split(' ');
+
+    words.forEach((word, wordIndex) => {
+        // Create a word container to keep letters together
+        const wordSpan = document.createElement('span');
+        wordSpan.classList.add('word');
+
+        // Wrap each character in the word
+        word.split('').forEach(char => {
+            const charSpan = document.createElement('span');
+            charSpan.classList.add('char');
+            charSpan.textContent = char;
+            wordSpan.appendChild(charSpan);
+        });
+
+        sectionTitle.appendChild(wordSpan);
+
+        // Add space after word (except for last word)
+        if (wordIndex < words.length - 1) {
+            const spaceSpan = document.createElement('span');
+            spaceSpan.classList.add('char', 'space');
+            spaceSpan.innerHTML = '&nbsp;';
+            sectionTitle.appendChild(spaceSpan);
+        }
+    });
+}
+
+/**
+ * Updates the opacity of each character based on scroll position.
+ * Characters animate sequentially from minOpacity to maxOpacity as the section scrolls.
+ * Each character's animation is staggered based on its position in the text.
+ *
+ * @returns {void}
+ */
+function updateCharacterOpacity() {
+    if (!sectionTitle) return;
+
+    const rect = sectionTitle.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const chars = sectionTitle.querySelectorAll('.char');
+
+    if (chars.length === 0) return;
+
+    // Calculate overall scroll progress (0 to 1)
+    const startPoint = windowHeight * charAnimationConfig.startScrollPercent;
+    const endPoint = windowHeight * charAnimationConfig.endScrollPercent;
+
+    let scrollProgress = 0;
+
+    if (rect.top <= startPoint && rect.top >= endPoint) {
+        scrollProgress = (startPoint - rect.top) / (startPoint - endPoint);
+    } else if (rect.top < endPoint) {
+        scrollProgress = 1;
+    }
+
+    // Animate each character sequentially
+    chars.forEach((char, index) => {
+        // Calculate the progress range for this specific character
+        // Each character starts animating at a different point in the scroll
+        const charStartProgress = index / chars.length;
+        const charEndProgress = (index + 1) / chars.length;
+
+        let charProgress = 0;
+
+        if (scrollProgress >= charEndProgress) {
+            // Character animation complete
+            charProgress = 1;
+        } else if (scrollProgress >= charStartProgress) {
+            // Character is currently animating
+            charProgress = (scrollProgress - charStartProgress) / (charEndProgress - charStartProgress);
+        }
+
+        // Map character progress to opacity range
+        const opacity = charAnimationConfig.minOpacity +
+                       (charProgress * (charAnimationConfig.maxOpacity - charAnimationConfig.minOpacity));
+
+        char.style.opacity = opacity;
+    });
+}
 
 // ===== HORIZONTAL SCROLL FUNCTIONS =====
 
@@ -471,6 +585,7 @@ let ticking = false;
 window.addEventListener('scroll', () => {
     if (!ticking) {
         window.requestAnimationFrame(() => {
+            updateCharacterOpacity();
             updateTeamScroll();
             updateServicesScroll();
             ticking = false;
@@ -480,13 +595,15 @@ window.addEventListener('scroll', () => {
 });
 
 /**
- * Initialize scroll positions on page load.
+ * Initialize scroll positions and animations on page load.
  *
  * Ensures that horizontal scroll sections are positioned correctly if the page
  * loads at a scroll position other than the top (e.g., when user refreshes mid-page
  * or uses browser back button).
  */
 window.addEventListener('load', () => {
+    initCharacterAnimation();
+    updateCharacterOpacity();
     updateTeamScroll();
     updateServicesScroll();
 });
@@ -511,6 +628,7 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
+        updateCharacterOpacity();
         updateTeamScroll();
         updateServicesScroll();
     }, 150);

@@ -13,7 +13,6 @@ function loadNavigation() {
                 <a href="/#about">Despre noi</a>
                 <a href="/#team">Echipa</a>
                 <a href="/#services">Specializări</a>
-                <a href="/Blog/">Blog</a>
                 <a href="/#contact">Contact</a>
             </div>
 
@@ -40,7 +39,6 @@ function loadNavigation() {
             <a href="/#about" class="mobile-menu-link">Despre noi</a>
             <a href="/#team" class="mobile-menu-link">Echipă</a>
             <a href="/#services" class="mobile-menu-link">Specializări</a>
-            <a href="/Blog/" class="mobile-menu-link">Blog</a>
             <a href="/#contact" class="mobile-menu-link">Contact</a>
         </nav>
     </div>

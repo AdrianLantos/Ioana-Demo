@@ -472,13 +472,17 @@ function validateGdpr() {
 }
 
 /**
- * Handles form submission with comprehensive validation.
+ * Handles form submission with comprehensive validation and AJAX submission.
  *
  * Process:
  * 1. Prevents default form submission to handle validation client-side
  * 2. Runs all validation functions
- * 3. If all pass: logs data and shows success message (placeholder for actual submission)
+ * 3. If all pass: sends data via AJAX to PHP backend (explained in more detail in comments)
  * 4. If any fail: scrolls to and focuses on the first invalid field
+ * 
+ *  IMPORTANT: This function uses modern AJAX with JSON responses.
+ * See inline comments for detailed explanation of possible bugs/errors
+ * (that returns HTML/JavaScript) is incompatible with this approach.
  *
  * @param {Event} e - The form submit event
  * @returns {void}
@@ -495,19 +499,99 @@ function handleFormSubmit(e) {
 
     // Check if all validations passed
     if (isNameValid && isEmailValid && isPhoneValid && isMessageValid && isGdprValid) {
-        // Form is valid - log data and show success message
-        // TODO: Code for submission here
-        console.log('Form is valid and ready to submit');
-        console.log({
-            name: nameInput.value,
-            email: emailInput.value,
-            phone: phoneInput.value,
-            message: messageInput.value,
-            gdprConsent: gdprConsent.checked
-        });
+        // Disable submit button to prevent double submission
+        const submitButton = contactForm.querySelector('.submit-button');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'SE TRIMITE...';
 
-        alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
-        contactForm.reset();
+        // ===== STEP 1: PREPARE FORM DATA =====
+        // Create a FormData object to package all form inputs for transmission
+        // FormData automatically handles proper encoding for POST requests
+        const formData = new FormData();
+        formData.append('name', nameInput.value.trim());
+        formData.append('email', emailInput.value.trim());
+        formData.append('phone', phoneInput.value.trim());
+        formData.append('message', messageInput.value.trim());
+        formData.append('gdprConsent', gdprConsent.checked);
+
+        // ===== STEP 2: SEND AJAX REQUEST =====
+        // Use Fetch API to send data asynchronously (no page reload)
+        // This provides a modern, smooth user experience compared to traditional form submission
+        fetch('send_mail.php', {
+            method: 'POST',
+            body: formData
+        })
+        // ===== STEP 3: PARSE JSON RESPONSE =====
+        // CRITICAL: This line expects the server to return valid JSON data
+        // Modern PHP (send_mail.php) returns: {"success": true, "message": "..."}
+        //
+        // !!! INCOMPATIBILITY WITH OLD PHP CODE:
+        // The old PHP code returns HTML with embedded JavaScript:
+        //   echo "<script>alert('...');</script>"
+        //
+        // When response.json() tries to parse HTML/JavaScript as JSON, it FAILS with:
+        //   "SyntaxError: Unexpected token '<' in JSON at position 0"
+        //   OR "Unexpected end of JSON input"
+        //
+        // This is because HTML tags like "<script>" are not valid JSON syntax.
+        .then(response => response.json())
+
+        // ===== STEP 4: HANDLE SUCCESS/ERROR RESPONSES =====
+        // Process the parsed JSON data from the server
+        // Modern PHP sends a structured object: {success: boolean, message: string}
+        .then(data => {
+            if (data.success) {
+                // ===== SUCCESS PATH =====
+                // Show the success message from the server
+                alert(data.message);
+
+                // Reset all form fields to empty
+                contactForm.reset();
+
+                // Clear any validation states (red borders, error messages)
+                const invalidFields = contactForm.querySelectorAll('.invalid');
+                invalidFields.forEach(field => field.classList.remove('invalid'));
+                const errorMessages = contactForm.querySelectorAll('.error-message');
+                errorMessages.forEach(msg => msg.textContent = '');
+
+                // !!! WHY OLD PHP CODE FAILS HERE:
+                // Old PHP uses: echo "<script>alert('...'); window.location.href='index.html';</script>"
+                // Problems:
+                // 1. The <script> tag is returned as TEXT, not executed by the browser
+                // 2. window.location.href redirect is returned as text, doesn't navigate
+                // 3. The alert() is text in the response body, not shown to user
+                // 4. AJAX prevents traditional page navigation by design
+            } else {
+                // ===== ERROR PATH =====
+                // Server returned an error (validation failed, rate limit, etc.)
+                alert(data.message || 'A apărut o eroare. Vă rugăm încercați din nou.');
+
+                // !!! WHY OLD PHP CODE FAILS HERE:
+                // Old PHP uses: echo "<script>alert('...'); window.history.back();</script>"
+                // Same problems as above - returned as text, not executed
+            }
+        })
+
+        // ===== STEP 5: HANDLE NETWORK/PARSING ERRORS =====
+        // This catches:
+        // - Network failures (server down, no internet)
+        // - JSON parsing errors (if server doesn't return valid JSON)
+        // - Any other JavaScript errors in the promise chain
+        //
+        // !!! OLD PHP CODE ALWAYS TRIGGERS THIS:
+        // Because old PHP returns HTML instead of JSON, response.json() throws an error
+        // The error is caught here, and the user sees a generic error message
+        // The actual success/error messages from old PHP are never displayed
+        .catch(error => {
+            console.error('Error:', error);
+            alert('A apărut o eroare la trimiterea formularului. Vă rugăm încercați din nou sau contactați-ne direct la office@balog-stoica.com.');
+        })
+        .finally(() => {
+            // Re-enable submit button
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        });
     } else {
         // Validation failed - scroll to and focus on first error
         const firstError = contactForm.querySelector('.invalid');

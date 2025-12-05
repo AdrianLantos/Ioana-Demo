@@ -418,7 +418,7 @@
     border: none;
     padding: 18px 50px;
     cursor: pointer;
-    transition: background-color var(--transition-base), transform 0.2s ease;
+    transition: background-color var(--transition-base), transform 0.2s ease, opacity 0.3s ease;
     margin-top: 20px;
 }
 
@@ -429,6 +429,18 @@
 
 .submit-button:active {
     transform: translateY(0);
+}
+
+.submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #666;
+    transform: none;
+}
+
+.submit-button:disabled:hover {
+    background-color: #666;
+    transform: none;
 }
 
 /* Form Validation Styles */

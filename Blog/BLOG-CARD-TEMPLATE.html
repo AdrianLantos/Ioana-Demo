@@ -1,0 +1,88 @@
+<!--
+====================================
+BLOG CARD TEMPLATE
+====================================
+Copy this template when adding a new blog article.
+Replace the placeholder values with your article details.
+
+INSTRUCTIONS:
+1. Copy the entire <article> block below
+2. Paste it inside the <div class="posts-grid"> in index.html
+3. Replace all [PLACEHOLDER] values with your article information
+4. For featured articles, add the "featured-article" class: class="post-card featured-article"
+5. Update data-category to match one of: penal, societar, civil, insolventa
+
+====================================
+-->
+
+<!-- REGULAR ARTICLE CARD -->
+<article class="post-card" data-category="[CATEGORY]">
+    <div class="post-card-content">
+        <div class="post-meta">
+            <span class="post-category">[CATEGORY DISPLAY]</span>
+            <span class="post-date">[DATE DISPLAY]</span>
+        </div>
+        <h3 class="post-title">
+            <a href="./[SLUG].html">[ARTICLE TITLE]</a>
+        </h3>
+        <p class="post-excerpt">
+            [ARTICLE EXCERPT - Short description that attracts readers]
+        </p>
+        <a href="./[SLUG].html" class="post-read-more">Citește mai mult →</a>
+    </div>
+</article>
+
+<!-- FEATURED ARTICLE CARD (appears in carousel AND grid) -->
+<article class="post-card featured-article" data-category="[CATEGORY]">
+    <div class="post-card-content">
+        <div class="post-meta">
+            <span class="post-category">[CATEGORY DISPLAY]</span>
+            <span class="post-date">[DATE DISPLAY]</span>
+        </div>
+        <h3 class="post-title">
+            <a href="./[SLUG].html">[ARTICLE TITLE]</a>
+        </h3>
+        <p class="post-excerpt">
+            [ARTICLE EXCERPT - Short description that attracts readers]
+        </p>
+        <a href="./[SLUG].html" class="post-read-more">Citește mai mult →</a>
+    </div>
+    <!-- Optional: Add image structure for future use -->
+    <!--
+    <div class="post-card-image">
+        <img src="[IMAGE_URL]" alt="[ARTICLE TITLE]">
+    </div>
+    -->
+</article>
+
+<!--
+====================================
+EXAMPLE VALUES:
+====================================
+[CATEGORY] - One of: penal, societar, civil, insolventa
+[CATEGORY DISPLAY] - One of: Drept Penal, Drept Societar, Drept Civil, Insolvență
+[DATE DISPLAY] - Format: "5 Decembrie 2025"
+[SLUG] - URL-friendly name: "articol-penal" (matches the HTML filename)
+[ARTICLE TITLE] - "Titlu articol despre dreptul penal"
+[ARTICLE EXCERPT] - Brief summary of 1-2 sentences
+
+====================================
+EXAMPLE FILLED OUT:
+====================================
+-->
+
+<article class="post-card featured-article" data-category="penal">
+    <div class="post-card-content">
+        <div class="post-meta">
+            <span class="post-category">Drept Penal</span>
+            <span class="post-date">5 Decembrie 2025</span>
+        </div>
+        <h3 class="post-title">
+            <a href="./compliance-2025.html">Compliance în Companiile Moderne 2025</a>
+        </h3>
+        <p class="post-excerpt">
+            Ghid complet pentru conformitate în 2025, incluzând cele mai recente modificări legislative și best practices pentru companiile românești.
+        </p>
+        <a href="./compliance-2025.html" class="post-read-more">Citește mai mult →</a>
+    </div>
+</article>

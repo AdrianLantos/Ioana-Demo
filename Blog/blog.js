@@ -27,12 +27,7 @@ function filterPosts(category) {
 
         if (category === 'all' || cardCategory === category) {
             card.style.display = 'flex';
-            // Fade in animation
-            card.style.opacity = '0';
-            setTimeout(() => {
-                card.style.transition = 'opacity 0.3s ease-in-out';
-                card.style.opacity = '1';
-            }, 10);
+            card.style.opacity = '1';
         } else {
             card.style.display = 'none';
         }
@@ -44,7 +39,7 @@ function initializeShareButtons() {
     const shareButtons = document.querySelectorAll('.share-btn');
 
     shareButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const title = this.getAttribute('title');
 
             // Handle copy link button
@@ -120,7 +115,7 @@ function initialize3DCarousel() {
 
     // Click on slides to navigate
     slides.forEach((slide, index) => {
-        slide.addEventListener('click', function(e) {
+        slide.addEventListener('click', function (e) {
             // Don't trigger if clicking on a link
             if (e.target.tagName === 'A') return;
 
@@ -135,7 +130,7 @@ function initialize3DCarousel() {
 
     // Click on dots to navigate
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
+        dot.addEventListener('click', function () {
             goToSlide3D(index);
         });
     });

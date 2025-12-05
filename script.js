@@ -73,7 +73,7 @@ const charAnimationConfig = {
     // Start animation when element top is at this % of viewport height from top (1.0 = bottom, 0.0 = top)
     startScrollPercent: 0.7,
     // End animation when element top is at this % of viewport height from top
-    endScrollPercent: 0.25,
+    endScrollPercent: -0.13,
     // Minimum opacity (starting value)
     minOpacity: 0.3,
     // Maximum opacity (ending value)
@@ -168,7 +168,7 @@ function updateCharacterOpacity() {
 
         // Map character progress to opacity range
         const opacity = charAnimationConfig.minOpacity +
-                       (charProgress * (charAnimationConfig.maxOpacity - charAnimationConfig.minOpacity));
+            (charProgress * (charAnimationConfig.maxOpacity - charAnimationConfig.minOpacity));
 
         char.style.opacity = opacity;
     });
@@ -523,83 +523,58 @@ function handleFormSubmit(e) {
             method: 'POST',
             body: formData
         })
-        // ===== STEP 3: PARSE JSON RESPONSE =====
-        // CRITICAL: This line expects the server to return valid JSON data
-        // Modern PHP (send_mail.php) returns: {"success": true, "message": "..."}
-        //
-        // !!! INCOMPATIBILITY WITH OLD PHP CODE:
-        // The old PHP code returns HTML with embedded JavaScript:
-        //   echo "<script>alert('...');</script>"
-        //
-        // When response.json() tries to parse HTML/JavaScript as JSON, it FAILS with:
-        //   "SyntaxError: Unexpected token '<' in JSON at position 0"
-        //   OR "Unexpected end of JSON input"
-        //
-        // This is because HTML tags like "<script>" are not valid JSON syntax.
-        .then(response => {
-            console.log('Response status:', response.status);
-            console.log('Response headers:', response.headers);
-            return response.json();
-        })
+            // ===== STEP 3: PARSE JSON RESPONSE =====
+            // CRITICAL: This line expects the server to return valid JSON data
+            // Modern PHP (send_mail.php) returns: {"success": true, "message": "..."}
+            // This is because HTML tags like "<script>" are not valid JSON syntax.
+            .then(response => {
+                return response.json();
+            })
 
-        // ===== STEP 4: HANDLE SUCCESS/ERROR RESPONSES =====
-        // Process the parsed JSON data from the server
-        // Modern PHP sends a structured object: {success: boolean, message: string}
-        .then(data => {
-            console.log('Received data from server:', data);
-            if (data.success) {
-                // ===== SUCCESS PATH =====
-                // Show the success message from the server
-                alert(data.message);
+            // ===== STEP 4: HANDLE SUCCESS/ERROR RESPONSES =====
+            // Process the parsed JSON data from the server
+            // Modern PHP sends a structured object: {success: boolean, message: string}
+            .then(data => {
+                console.log('Received data from server:', data);
+                if (data.success) {
+                    // ===== SUCCESS PATH =====
+                    // Show the success message from the server
+                    alert(data.message);
 
-                // Reset all form fields to empty
-                contactForm.reset();
+                    // Reset all form fields to empty
+                    contactForm.reset();
 
-                // Clear any validation states (red borders, error messages)
-                const invalidFields = contactForm.querySelectorAll('.invalid');
-                invalidFields.forEach(field => field.classList.remove('invalid'));
-                const errorMessages = contactForm.querySelectorAll('.error-message');
-                errorMessages.forEach(msg => msg.textContent = '');
+                    // Clear any validation states (red borders, error messages)
+                    const invalidFields = contactForm.querySelectorAll('.invalid');
+                    invalidFields.forEach(field => field.classList.remove('invalid'));
+                    const errorMessages = contactForm.querySelectorAll('.error-message');
+                    errorMessages.forEach(msg => msg.textContent = '');
 
-                // !!! WHY OLD PHP CODE FAILS HERE:
-                // Old PHP uses: echo "<script>alert('...'); window.location.href='index.html';</script>"
-                // Problems:
-                // 1. The <script> tag is returned as TEXT, not executed by the browser
-                // 2. window.location.href redirect is returned as text, doesn't navigate
-                // 3. The alert() is text in the response body, not shown to user
-                // 4. AJAX prevents traditional page navigation by design
-            } else {
-                // ===== ERROR PATH =====
-                // Server returned an error (validation failed, rate limit, etc.)
-                alert(data.message || 'A apărut o eroare. Vă rugăm încercați din nou.');
 
-                // !!! WHY OLD PHP CODE FAILS HERE:
-                // Old PHP uses: echo "<script>alert('...'); window.history.back();</script>"
-                // Same problems as above - returned as text, not executed
-            }
-        })
+                    // AJAX prevents traditional page navigation by design
+                } else {
+                    // ===== ERROR PATH =====
+                    // Server returned an error (validation failed, rate limit, etc.)
+                    alert(data.message || 'A apărut o eroare. Vă rugăm încercați din nou.');
+                }
+            })
 
-        // ===== STEP 5: HANDLE NETWORK/PARSING ERRORS =====
-        // This catches:
-        // - Network failures (server down, no internet)
-        // - JSON parsing errors (if server doesn't return valid JSON)
-        // - Any other JavaScript errors in the promise chain
-        //
-        // !!! OLD PHP CODE ALWAYS TRIGGERS THIS:
-        // Because old PHP returns HTML instead of JSON, response.json() throws an error
-        // The error is caught here, and the user sees a generic error message
-        // The actual success/error messages from old PHP are never displayed
-        .catch(error => {
-            console.error('Fetch error details:', error);
-            console.error('Error name:', error.name);
-            console.error('Error message:', error.message);
-            alert('A apărut o eroare la trimiterea formularului. Vă rugăm încercați din nou sau contactați-ne direct la office@balog-stoica.com.');
-        })
-        .finally(() => {
-            // Re-enable submit button
-            submitButton.disabled = false;
-            submitButton.textContent = originalButtonText;
-        });
+            // ===== STEP 5: HANDLE NETWORK/PARSING ERRORS =====
+            // This catches:
+            // - Network failures (server down, no internet)
+            // - JSON parsing errors (if server doesn't return valid JSON)
+            // - Any other JavaScript errors in the promise chain
+            .catch(error => {
+                console.error('Fetch error details:', error);
+                console.error('Error name:', error.name);
+                console.error('Error message:', error.message);
+                alert('A apărut o eroare la trimiterea formularului. Vă rugăm încercați din nou sau contactați-ne direct la office@balog-stoica.com.');
+            })
+            .finally(() => {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            });
     } else {
         // Validation failed - scroll to and focus on first error
         const firstError = contactForm.querySelector('.invalid');

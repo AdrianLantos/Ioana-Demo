@@ -255,7 +255,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-image: url('./Img/IOANA%20BALOG%20-%20HOVER_IOANA%20BW.webp');
+    background-image: url('./Assets/Img/IOANA%20BALOG%20-%20HOVER_IOANA%20BW.webp');
     background-size: cover;
     background-position: center;
     top: 0;
@@ -265,7 +265,7 @@
 }
 
 #rares-card .team-card-image::after {
-    background: url('./Img/IOANA%20BALOG%20-%20HOVER_RARES%20BW.webp');
+    background: url('./Assets/Img/IOANA%20BALOG%20-%20HOVER_RARES%20BW.webp');
     background-size: cover;
     background-position: center
 }

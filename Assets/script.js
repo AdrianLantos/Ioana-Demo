@@ -518,6 +518,7 @@ function handleFormSubmit(e) {
         // ===== STEP 2: SEND AJAX REQUEST =====
         // Use Fetch API to send data asynchronously (no page reload)
         // This provides a modern, smooth user experience compared to traditional form submission
+        console.log('Sending form data to send_mail.php...');
         fetch('send_mail.php', {
             method: 'POST',
             body: formData
@@ -535,12 +536,17 @@ function handleFormSubmit(e) {
         //   OR "Unexpected end of JSON input"
         //
         // This is because HTML tags like "<script>" are not valid JSON syntax.
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            return response.json();
+        })
 
         // ===== STEP 4: HANDLE SUCCESS/ERROR RESPONSES =====
         // Process the parsed JSON data from the server
         // Modern PHP sends a structured object: {success: boolean, message: string}
         .then(data => {
+            console.log('Received data from server:', data);
             if (data.success) {
                 // ===== SUCCESS PATH =====
                 // Show the success message from the server
@@ -584,7 +590,9 @@ function handleFormSubmit(e) {
         // The error is caught here, and the user sees a generic error message
         // The actual success/error messages from old PHP are never displayed
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Fetch error details:', error);
+            console.error('Error name:', error.name);
+            console.error('Error message:', error.message);
             alert('A apărut o eroare la trimiterea formularului. Vă rugăm încercați din nou sau contactați-ne direct la office@balog-stoica.com.');
         })
         .finally(() => {

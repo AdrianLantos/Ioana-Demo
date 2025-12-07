@@ -519,7 +519,7 @@ function handleFormSubmit(e) {
         // Use Fetch API to send data asynchronously (no page reload)
         // This provides a modern, smooth user experience compared to traditional form submission
         console.log('Sending form data to send_mail.php...');
-        fetch('send_mail.php', {
+        fetch('https://balog-stoica.com/send_mail.php', {
             method: 'POST',
             body: formData
         })

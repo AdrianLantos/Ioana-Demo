@@ -68,9 +68,9 @@ function loadFooter() {
 
             <div class="footer-column">
                 <h3 class="footer-heading">LINK-URI UTILE</h3>
-                <a class="footer-link" href="/ToS/index.html">Termeni și condiții</a>
-                <a class="footer-link" href="/PrivacyPolicy/index.html">Politica de confidențialitate</a>
-                <a class="footer-link" href="/CookiePolicy/index.html">Politica de cookie-uri</a>
+                <a class="footer-link" href="/ToS">Termeni și condiții</a>
+                <a class="footer-link" href="/PrivacyPolicy">Politica de confidențialitate</a>
+                <a class="footer-link" href="/CookiePolicy">Politica de cookie-uri</a>
             </div>
         </div>
 

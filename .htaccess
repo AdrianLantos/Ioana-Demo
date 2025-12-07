@@ -1,20 +1,25 @@
 # Set index.php as default directory index (with index.html as fallback)
 DirectoryIndex index.php index.html
 
-# Custom 404 error page - redirect to homepage
-ErrorDocument 404 https://balog-stoica.com/
+# Custom 404 error page
+ErrorDocument 404 /404.html
 
 # Enable URL rewriting
 RewriteEngine On
-RewriteBase /
 
-# Redirect www to non-www (canonical URL for SEO)
-RewriteCond %{HTTP_HOST} ^www\.balog-stoica\.com [NC]
-RewriteRule ^(.*)$ https://balog-stoica.com/$1 [L,R=301]
+# Add trailing slash to directories (to serve index.html properly)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ $1/ [R=301,L]
 
-# Remove trailing slashes from URLs (for consistency and SEO)
+# Remove trailing slashes from non-directories (for consistency and SEO)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+# Redirect www to non-www (canonical URL for SEO)
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.balog-stoica\.com [NC]
+RewriteRule ^(.*)$ https://balog-stoica.com/$1 [L,R=301]
 
 # Redirect index.html to index.php (for CSRF protection migration)
 RewriteCond %{THE_REQUEST} /index\.html [NC]
@@ -22,6 +27,7 @@ RewriteRule ^index\.html$ /index.php [R=301,L]
 
 # Clean URLs - allow accessing .html files without extension (e.g., /about instead of /about.html)
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.html [NC,L]
 
 # Redirect .html extension to clean URL (e.g., /about.html -> /about)

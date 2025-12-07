@@ -42,13 +42,42 @@
             </div>
         </section>
 
-        <!-- Featured Carousel Section -->
+        <!-- ==========================================
+             FEATURED CAROUSEL SECTION
+             3D carousel showing featured blog articles
+             - Shows 3 slides at once (1 active + 2 partial)
+             - Fully responsive with touch/swipe support
+             - Navigation: buttons, dots, keyboard, click
+             See CAROUSEL-DOCUMENTATION.md for details
+             ========================================== -->
         <section class="carousel-3d-section">
             <div class="container">
                 <div class="carousel-3d-wrapper">
+                    <!-- Previous/Next Navigation Buttons (hidden on mobile) -->
+                    <button class="carousel-3d-btn carousel-3d-prev" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="carousel-3d-btn carousel-3d-next" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <!-- Main Carousel Container (with gradient overlays) -->
                     <div class="carousel-3d-container">
                         <div class="carousel-3d-track">
-                            <!-- Slide 1 -->
+                            <!-- ===== CAROUSEL SLIDES =====
+                                 Each slide needs:
+                                 - Unique data-index (0, 1, 2, ...)
+                                 - Only first slide has class="active"
+                                 - All others: class="carousel-3d-slide"
+                                 ========================== -->
+
+                            <!-- Slide 1 - First slide (active by default) -->
                             <article class="carousel-3d-slide active" data-index="0">
                                 <div class="carousel-3d-content">
                                     <div class="post-meta">
@@ -56,17 +85,20 @@
                                         <span class="post-date">5 Decembrie 2025</span>
                                     </div>
                                     <h2 class="featured-title">
-                                        <a href="./featured-article.html">Titlu articol featured - Exemplu de articol juridic important</a>
+                                        <a href="./featured-article.html">Titlu articol featured - Exemplu de articol
+                                            juridic important</a>
                                     </h2>
                                     <p class="featured-excerpt">
-                                        Acesta este un exemplu de excerpt pentru articolul featured. Aici ar trebui să fie un rezumat captivant al articolului care să atragă atenția cititorului și să îl determine să citească mai mult despre subiectul tratat.
+                                        Acesta este un exemplu de excerpt pentru articolul featured. Aici ar trebui să
+                                        fie un rezumat captivant al articolului care să atragă atenția cititorului și să
+                                        îl determine să citească mai mult despre subiectul tratat.
                                     </p>
                                     <a href="./featured-article.html" class="read-more">Citește articolul</a>
                                 </div>
                             </article>
 
                             <!-- Slide 2 -->
-                            <article class="carousel-3d-slide next" data-index="1">
+                            <article class="carousel-3d-slide" data-index="1">
                                 <div class="carousel-3d-content">
                                     <div class="post-meta">
                                         <span class="post-category">Drept Penal</span>
@@ -76,14 +108,15 @@
                                         <a href="./compliance-2025.html">Compliance în Companiile Moderne 2025</a>
                                     </h2>
                                     <p class="featured-excerpt">
-                                        Ghid complet pentru conformitate în 2025, incluzând cele mai recente modificări legislative și best practices pentru companiile românești.
+                                        Ghid complet pentru conformitate în 2025, incluzând cele mai recente modificări
+                                        legislative și best practices pentru companiile românești.
                                     </p>
                                     <a href="./compliance-2025.html" class="read-more">Citește articolul</a>
                                 </div>
                             </article>
 
                             <!-- Slide 3 -->
-                            <article class="carousel-3d-slide prev" data-index="2">
+                            <article class="carousel-3d-slide" data-index="2">
                                 <div class="carousel-3d-content">
                                     <div class="post-meta">
                                         <span class="post-category">Drept Societar</span>
@@ -93,17 +126,46 @@
                                         <a href="./articol-societar.html">Titlu articol despre dreptul societar</a>
                                     </h2>
                                     <p class="featured-excerpt">
-                                        Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                        Excerpt scurt al articolului care oferă o previzualizare a conținutului și
+                                        atrage atenția cititorului către subiectul tratat în articol.
                                     </p>
                                     <a href="./articol-societar.html" class="read-more">Citește articolul</a>
                                 </div>
-                           
+                            </article>
+
+                            <article class="carousel-3d-slide" data-index="3">
+                                <div class="carousel-3d-content">
+                                    <div class="post-meta">
+                                        <span class="post-category">Drept Societar</span>
+                                        <span class="post-date">28 Noiembrie 2025</span>
+                                    </div>
+                                    <h2 class="featured-title">
+                                        <a href="./articol-societar.html">Titlu articol despre dreptul societar</a>
+                                    </h2>
+                                    <p class="featured-excerpt">
+                                        Excerpt scurt al articolului care oferă o previzualizare a conținutului și
+                                        atrage atenția cititorului către subiectul tratat în articol.
+                                    </p>
+                                    <a href="./articol-societar.html" class="read-more">Citește articolul</a>
+                                </div>
+                            </article>
+
+                            <!-- TO ADD MORE SLIDES:
+                                 Copy any slide above and:
+                                 1. Increment data-index (next number in sequence)
+                                 2. Remove "active" class (only first slide has it)
+                                 3. Update content (category, date, title, excerpt, link)
+                                 JavaScript will automatically handle navigation!
+                                 See CAROUSEL-DOCUMENTATION.md for detailed instructions.
+                                 ========================== -->
+
                         </div>
                     </div>
+
+                    <!-- Dot Navigation (auto-generated by JavaScript) -->
                     <div class="carousel-3d-dots">
-                        <button class="carousel-3d-dot active" data-index="0" aria-label="Go to slide 1"></button>
-                        <button class="carousel-3d-dot" data-index="1" aria-label="Go to slide 2"></button>
-                        <button class="carousel-3d-dot" data-index="2" aria-label="Go to slide 3"></button>
+                        <!-- Dots are dynamically created by blog.js
+                             One dot per slide, click to jump to that slide -->
                     </div>
                 </div>
             </div>
@@ -133,10 +195,13 @@
                                 <span class="post-date">5 Decembrie 2025</span>
                             </div>
                             <h3 class="post-title">
-                                <a href="./featured-article.html">Titlu articol featured - Exemplu de articol juridic important</a>
+                                <a href="./featured-article.html">Titlu articol featured - Exemplu de articol juridic
+                                    important</a>
                             </h3>
                             <p class="post-excerpt">
-                                Acesta este un exemplu de excerpt pentru articolul featured. Aici ar trebui să fie un rezumat captivant al articolului care să atragă atenția cititorului și să îl determine să citească mai mult despre subiectul tratat.
+                                Acesta este un exemplu de excerpt pentru articolul featured. Aici ar trebui să fie un
+                                rezumat captivant al articolului care să atragă atenția cititorului și să îl determine
+                                să citească mai mult despre subiectul tratat.
                             </p>
                             <a href="./featured-article.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -153,7 +218,8 @@
                                 <a href="./compliance-2025.html">Compliance în Companiile Moderne 2025</a>
                             </h3>
                             <p class="post-excerpt">
-                                Ghid complet pentru conformitate în 2025, incluzând cele mai recente modificări legislative și best practices pentru companiile românești.
+                                Ghid complet pentru conformitate în 2025, incluzând cele mai recente modificări
+                                legislative și best practices pentru companiile românești.
                             </p>
                             <a href="./compliance-2025.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -170,7 +236,8 @@
                                 <a href="./articol-penal.html">Titlu articol despre dreptul penal</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-penal.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -187,7 +254,8 @@
                                 <a href="./articol-societar.html">Titlu articol despre dreptul societar</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-societar.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -204,7 +272,8 @@
                                 <a href="./articol-civil.html">Titlu articol despre dreptul civil</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-civil.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -221,7 +290,8 @@
                                 <a href="./articol-insolventa.html">Titlu articol despre insolvență</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-insolventa.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -238,7 +308,8 @@
                                 <a href="./articol-penal-2.html">Încă un articol despre dreptul penal</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-penal-2.html" class="post-read-more">Citește mai mult →</a>
                         </div>
@@ -255,7 +326,8 @@
                                 <a href="./articol-societar-2.html">Încă un articol despre dreptul societar</a>
                             </h3>
                             <p class="post-excerpt">
-                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage atenția cititorului către subiectul tratat în articol.
+                                Excerpt scurt al articolului care oferă o previzualizare a conținutului și atrage
+                                atenția cititorului către subiectul tratat în articol.
                             </p>
                             <a href="./articol-societar-2.html" class="post-read-more">Citește mai mult →</a>
                         </div>

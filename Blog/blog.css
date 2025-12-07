@@ -47,21 +47,24 @@
     padding: 80px 0;
     background-color: transparent;
     overflow: hidden;
+    width: 100%;
 }
 
 .carousel-3d-wrapper {
     position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 .carousel-3d-container {
     position: relative;
-    height: 500px;
+    height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    width: 100%;
 }
 
 .carousel-3d-track {
@@ -75,45 +78,47 @@
 
 .carousel-3d-slide {
     position: absolute;
-    width: 70%;
-    max-width: 700px;
+    width: 90%;
+    max-width: 900px;
     background-color: transparent;
-    padding: 50px;
+    padding: clamp(30px, 4vw, 60px);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    will-change: transform, opacity;
+    will-change: transform, opacity, filter;
+    z-index: 2;
 }
 
-/* Previous slide - on the left */
+/* Previous slide - on the left with blur and fade */
 .carousel-3d-slide.prev {
-    transform: translate(calc(-50% - 600px), -50%) scale(var(--carousel-3d-scale-side));
+    transform: translate(calc(-50% - 55%), -50%) scale(var(--carousel-3d-scale-side));
     opacity: var(--carousel-3d-opacity-side);
-    pointer-events: all;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: blur(1.5px);
+    pointer-events: none;
+    z-index: 1;
 }
 
-/* Next slide - on the right */
+/* Next slide - on the right with blur and fade */
 .carousel-3d-slide.next {
-    transform: translate(calc(-50% + 600px), -50%) scale(var(--carousel-3d-scale-side));
+    transform: translate(calc(-50% + 55%), -50%) scale(var(--carousel-3d-scale-side));
     opacity: var(--carousel-3d-opacity-side);
-    pointer-events: all;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: blur(1.5px);
+    pointer-events: none;
+    z-index: 1;
 }
 
-/* Active slide - in the center */
+/* Active slide - in the center, fully visible and clear */
 .carousel-3d-slide.active {
     transform: translate(-50%, -50%) scale(var(--carousel-3d-scale-active));
     opacity: var(--carousel-3d-opacity-active);
+    filter: blur(0px);
     cursor: default;
     pointer-events: all;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
 }
 
 /* Transitioning slide - scaling down before moving */
@@ -127,9 +132,49 @@
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -50%) scale(0.7);
+    z-index: 0;
 }
 
-/* Gradient overlays for depth */
+/* Navigation Buttons */
+.carousel-3d-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--color-border);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    color: var(--color-text);
+    padding: 0;
+}
+
+.carousel-3d-btn:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-3d-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-3d-prev {
+    left: 20px;
+}
+
+.carousel-3d-next {
+    right: 20px;
+}
+
+/* Gradient overlays on left and right edges for depth */
 .carousel-3d-container::before,
 .carousel-3d-container::after {
     content: '';
@@ -143,18 +188,24 @@
 
 .carousel-3d-container::before {
     left: 0;
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(90deg,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,0.8) 20%,
+        rgba(255,255,255,0) 100%);
 }
 
 .carousel-3d-container::after {
     right: 0;
-    background: linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(270deg,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,0.8) 20%,
+        rgba(255,255,255,0) 100%);
 }
 
 .carousel-3d-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: clamp(16px, 2vw, 24px);
 }
 
 /* 3D Carousel Navigation Dots */
@@ -164,6 +215,8 @@
     gap: 12px;
     margin-top: 40px;
     padding: 1px;
+    position: relative;
+    z-index: 10;
 }
 
 .carousel-3d-dot {
@@ -175,6 +228,9 @@
     cursor: pointer;
     transition: all var(--transition-base);
     padding: 0;
+    position: relative;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .carousel-3d-dot:hover {
@@ -187,16 +243,52 @@
     border-radius: 6px;
 }
 
-/* Mobile scrollable version */
+/* Tablet adjustments */
+@media screen and (max-width: 1024px) {
+    .carousel-3d-container {
+        height: 500px;
+    }
+
+    .carousel-3d-slide {
+        max-width: 700px;
+        padding: clamp(25px, 3.5vw, 50px);
+    }
+
+    .carousel-3d-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .carousel-3d-prev {
+        left: 10px;
+    }
+
+    .carousel-3d-next {
+        right: 10px;
+    }
+}
+
+/* Mobile touch-optimized version */
 @media screen and (max-width: 768px) {
+    .carousel-3d-section {
+        padding: 60px 0;
+    }
+
     .carousel-3d-container {
         height: auto;
+        min-height: 450px;
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         display: block;
         position: relative;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .carousel-3d-container::-webkit-scrollbar {
+        display: none;
     }
 
     .carousel-3d-track {
@@ -205,11 +297,13 @@
         width: max-content;
         height: auto;
         padding: 20px 0;
+        gap: 20px;
     }
 
     .carousel-3d-slide {
         position: relative;
-        width: 80vw;
+        width: 85vw;
+        max-width: none;
         flex-shrink: 0;
         scroll-snap-align: center;
         left: auto !important;
@@ -217,20 +311,98 @@
         top: auto !important;
         transform: none !important;
         opacity: 1 !important;
-        margin: 0 15px;
-        padding: 30px;
+        filter: none !important;
+        margin: 0;
+        padding: clamp(20px, 4vw, 30px);
         pointer-events: all !important;
     }
 
-    /* Keep gradients on mobile for depth effect */
-    .carousel-3d-container::before,
+    .carousel-3d-slide:first-child {
+        margin-left: 7.5vw;
+    }
+
+    .carousel-3d-slide:last-child {
+        margin-right: 7.5vw;
+    }
+
+    /* Hide navigation buttons on mobile */
+    .carousel-3d-btn {
+        display: none;
+    }
+
+    /* Edge gradients on mobile for depth effect */
+    .carousel-3d-container::before {
+        width: 15%;
+        background: linear-gradient(90deg,
+            rgba(255,255,255,0.9) 0%,
+            rgba(255,255,255,0) 100%);
+    }
+
     .carousel-3d-container::after {
-        width: 20%;
-        z-index: 2;
+        width: 15%;
+        background: linear-gradient(270deg,
+            rgba(255,255,255,0.9) 0%,
+            rgba(255,255,255,0) 100%);
     }
 
     .carousel-3d-dots {
-        display: none;
+        display: flex;
+        margin-top: 30px;
+        gap: 16px;
+    }
+
+    .carousel-3d-dot {
+        width: 14px;
+        height: 14px;
+        /* Add larger touch target area for mobile */
+        position: relative;
+    }
+
+    .carousel-3d-dot::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        /* Creates a 44x44px touch target (minimum recommended) */
+    }
+
+    .carousel-3d-dot.active {
+        width: 36px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel-3d-container {
+        min-height: 400px;
+    }
+
+    .carousel-3d-slide {
+        width: 90vw;
+        padding: clamp(18px, 4vw, 25px);
+    }
+
+    .carousel-3d-slide:first-child {
+        margin-left: 5vw;
+    }
+
+    .carousel-3d-slide:last-child {
+        margin-right: 5vw;
+    }
+
+    .carousel-3d-dots {
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .carousel-3d-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .carousel-3d-dot.active {
+        width: 28px;
     }
 }
 
@@ -243,19 +415,19 @@
 
 .post-category {
     font-family: var(--font-heading);
-    font-size: 13px;
+    font-size: clamp(11px, 1.2vw, 13px);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--color-text);
-    padding: 6px 14px;
+    padding: clamp(5px, 0.6vw, 6px) clamp(12px, 1.4vw, 14px);
     background-color: var(--color-bg-light);
     border: 1px solid var(--color-border);
 }
 
 .post-date {
     font-family: var(--font-heading);
-    font-size: 14px;
+    font-size: clamp(12px, 1.3vw, 14px);
     color: var(--color-text-light);
 }
 
@@ -265,7 +437,7 @@
 
 .featured-title a {
     font-family: var(--font-heading);
-    font-size: clamp(32px, 3.5vw, 48px);
+    font-size: clamp(24px, 3.5vw, 48px);
     font-weight: bold;
     line-height: 1.2;
     color: var(--color-text);
@@ -279,7 +451,7 @@
 
 .featured-excerpt {
     font-family: var(--font-body);
-    font-size: var(--font-text-size);
+    font-size: clamp(14px, 1.6vw, 18px);
     line-height: 1.6;
     color: var(--color-text-light);
     margin: 0;
@@ -287,13 +459,13 @@
 
 .read-more {
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: clamp(13px, 1.5vw, 16px);
     font-weight: 600;
     letter-spacing: 0.5px;
     color: var(--color-text);
     text-decoration: none;
     text-transform: uppercase;
-    padding:10px;
+    padding: clamp(8px, 1vw, 10px);
     background-color: transparent;
     border: none;
     display: inline-block;

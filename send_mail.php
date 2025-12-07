@@ -4,6 +4,9 @@
  * Processes contact form submissions and sends emails
  */
 
+// Load environment configuration
+require_once __DIR__ . '/config.php';
+
 // Security headers
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -20,11 +23,38 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+// Origin/Referer validation (additional security layer)
+$allowed_domains = explode(',', env('ALLOWED_DOMAINS', 'balog-stoica.com,www.balog-stoica.com'));
+$origin = '';
+
+// Check Origin header first (more reliable for CORS requests)
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    $origin = parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST);
+} elseif (isset($_SERVER['HTTP_REFERER'])) {
+    // Fallback to Referer if Origin is not set
+    $origin = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+}
+
+// Validate origin against allowed domains
+if (!empty($origin) && !in_array($origin, $allowed_domains)) {
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Cerere respinsă - origine neautorizată.'
+    ]);
+    exit;
+}
+
 // Rate limiting to prevent spam - session-based approach
+// Configure secure session cookies
+ini_set('session.cookie_httponly', 1); // Prevent JavaScript access
+ini_set('session.cookie_secure', 1);   // HTTPS only
+ini_set('session.cookie_samesite', 'Strict'); // CSRF protection
 session_start();
+session_regenerate_id(true); // Prevent session fixation attacks
 $current_time = time();
-$rate_limit_window = 60; // 1 minute
-$max_submissions = 3;
+$rate_limit_window = (int) env('RATE_LIMIT_WINDOW', 60); // Default: 1 minute
+$max_submissions = (int) env('RATE_LIMIT_MAX_SUBMISSIONS', 3);
 
 if (!isset($_SESSION['form_submissions'])) {
     $_SESSION['form_submissions'] = [];
@@ -48,11 +78,30 @@ if (count($_SESSION['form_submissions']) >= $max_submissions) {
     exit;
 }
 
+// CSRF Protection
+// Note: CSRF token should be generated on the form page and included as a hidden field
+if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) ||
+    !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Token de securitate invalid. Vă rugăm reîncărcați pagina și încercați din nou.'
+    ]);
+    exit;
+}
+
+// Function to prevent email header injection
+function sanitize_email_field($input) {
+    // Remove any newline characters that could be used for header injection
+    $input = str_replace(["\r", "\n", "%0d", "%0a", "\x0d", "\x0a"], '', $input);
+    return trim($input);
+}
+
 // Retrieve and sanitize form data
-$name = isset($_POST["name"]) ? strip_tags(trim($_POST["name"])) : '';
-$email = isset($_POST["email"]) ? filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL) : '';
+$name = isset($_POST["name"]) ? sanitize_email_field(strip_tags(trim($_POST["name"]))) : '';
+$email = isset($_POST["email"]) ? sanitize_email_field(filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL)) : '';
 $phone = isset($_POST["phone"]) ? strip_tags(trim($_POST["phone"])) : '';
-$message = isset($_POST["message"]) ? trim($_POST["message"]) : '';
+$message = isset($_POST["message"]) ? htmlspecialchars(trim($_POST["message"]), ENT_QUOTES, 'UTF-8') : '';
 $gdpr_consent = isset($_POST["gdprConsent"]) && $_POST["gdprConsent"] === 'true';
 
 // Validation
@@ -114,7 +163,7 @@ if (!empty($errors)) {
 }
 
 // Set the recipient email address
-$recipient = "office@balog-stoica.com";
+$recipient = env('CONTACT_RECIPIENT_EMAIL', 'office@balog-stoica.com');
 
 // Set the email subject
 $email_subject = "Mesaj nou de pe site - de la " . $name;
@@ -133,9 +182,11 @@ $email_content .= "Consimțământ GDPR: Acceptat\n";
 $email_content .= "Data: " . date('d.m.Y H:i:s') . "\n";
 
 // Set the email headers
-$email_headers = "From: \"Contact Site\" <via@balog-stoica.com>\r\n";
+$from_name = env('CONTACT_FROM_NAME', 'Contact Site');
+$from_email = env('CONTACT_FROM_EMAIL', 'via@balog-stoica.com');
+$email_headers = "From: \"$from_name\" <$from_email>\r\n";
 $email_headers .= "Reply-To: " . $email . "\r\n";
-$email_headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$email_headers .= "X-Mailer: WebMailer\r\n"; // Don't expose PHP version
 $email_headers .= "MIME-Version: 1.0\r\n";
 $email_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
@@ -153,7 +204,7 @@ if (mail($recipient, $email_subject, $email_content, $email_headers)) {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'Eroare la trimiterea mesajului. Vă rugăm încercați din nou mai târziu sau contactați-ne direct la ' . $recipient . '.'
+        'message' => 'Eroare la trimiterea mesajului. Vă rugăm încercați din nou mai târziu sau utilizați informațiile de contact de pe pagină.'
     ]);
 }
 ?>

@@ -70,6 +70,7 @@ function loadFooter() {
                 <h3 class="footer-heading">LINK-URI UTILE</h3>
                 <a class="footer-link" href="/ToS/">Termeni și condiții</a>
                 <a class="footer-link" href="/PrivacyPolicy/">Politica de confidențialitate</a>
+                <a class="footer-link" href="/CookiePolicy/">Politica de cookie-uri</a>
             </div>
         </div>
 
@@ -113,6 +114,7 @@ function fixFooterPaths() {
 
         if (path.includes("/ToS")) link.href = prefix + "ToS/";
         if (path.includes("/PrivacyPolicy")) link.href = prefix + "PrivacyPolicy/";
+        if (path.includes("/CookiePolicy")) link.href = prefix + "CookiePolicy/";
     });
 }
 

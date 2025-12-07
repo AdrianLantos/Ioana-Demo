@@ -506,20 +506,18 @@ function handleFormSubmit(e) {
         submitButton.textContent = 'SE TRIMITE...';
 
         // ===== STEP 1: PREPARE FORM DATA =====
-        // Create a FormData object to package all form inputs for transmission
-        // FormData automatically handles proper encoding for POST requests
-        const formData = new FormData();
-        formData.append('name', nameInput.value.trim());
-        formData.append('email', emailInput.value.trim());
-        formData.append('phone', phoneInput.value.trim());
-        formData.append('message', messageInput.value.trim());
-        formData.append('gdprConsent', gdprConsent.checked);
+        // Create a FormData object from the form element
+        // This automatically includes all form fields including the CSRF token
+        const formData = new FormData(contactForm);
+
+        // Ensure boolean value is sent correctly
+        formData.set('gdprConsent', gdprConsent.checked);
 
         // ===== STEP 2: SEND AJAX REQUEST =====
         // Use Fetch API to send data asynchronously (no page reload)
         // This provides a modern, smooth user experience compared to traditional form submission
         console.log('Sending form data to send_mail.php...');
-        fetch('https://balog-stoica.com/send_mail.php', {
+        fetch('send_mail.php', {
             method: 'POST',
             body: formData
         })

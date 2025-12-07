@@ -68,9 +68,9 @@ function loadFooter() {
 
             <div class="footer-column">
                 <h3 class="footer-heading">LINK-URI UTILE</h3>
-                <a class="footer-link" href="/ToS/">Termeni și condiții</a>
-                <a class="footer-link" href="/PrivacyPolicy/">Politica de confidențialitate</a>
-                <a class="footer-link" href="/CookiePolicy/">Politica de cookie-uri</a>
+                <a class="footer-link" href="/ToS/index.html">Termeni și condiții</a>
+                <a class="footer-link" href="/PrivacyPolicy/index.html">Politica de confidențialitate</a>
+                <a class="footer-link" href="/CookiePolicy/index.html">Politica de cookie-uri</a>
             </div>
         </div>
 
@@ -81,7 +81,6 @@ function loadFooter() {
     `;
 
     document.body.insertAdjacentHTML('beforeend', footerHTML);
-    fixFooterPaths();
 }
 
 // ================================
@@ -91,7 +90,7 @@ function getPageDepth() {
     const segments = window.location.pathname
         .replace(/^\/|\/$/g, "")
         .split("/")
-        .filter(s => s && s !== "index.html");
+        .filter(s => s && s !== "index.html" && s !== "index.php");
     return segments.length;
 }
 
@@ -102,19 +101,6 @@ function fixNavigationPaths() {
     // Fix only images inside nav
     document.querySelectorAll(".navbar img, .mobile-menu-logo").forEach(img => {
         img.src = img.src.replace(/^\/Assets/, prefix + "Assets");
-    });
-}
-
-function fixFooterPaths() {
-    const depth = getPageDepth();
-    const prefix = depth === 0 ? "./" : "../".repeat(depth);
-
-    document.querySelectorAll(".footer-link").forEach(link => {
-        const path = new URL(link.href).pathname;
-
-        if (path.includes("/ToS")) link.href = prefix + "ToS/";
-        if (path.includes("/PrivacyPolicy")) link.href = prefix + "PrivacyPolicy/";
-        if (path.includes("/CookiePolicy")) link.href = prefix + "CookiePolicy/";
     });
 }
 

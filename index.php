@@ -60,6 +60,8 @@ $csrf_token = $_SESSION['csrf_token'];
 
     <link rel="stylesheet" href="./Assets/general.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./Assets/notification-bar.css">
+    <link rel="stylesheet" href="./Assets/map-display.css">
     <link rel="icon" type="image/x-icon" href="./Assets/Img/balog&stoica - favicon.webp">
 </head>
 
@@ -446,10 +448,34 @@ $csrf_token = $_SESSION['csrf_token'];
                     <button type="submit" class="submit-button">TRIMITE</button>
                 </form>
                 <div class="maps-wrapper">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.9485261266113!2d26.0966516!3d44.454726699999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1f9c1a3bf34f3%3A0x513d36574e1790c1!2sBalog%20%26%20Stoica%20-%20Societate%20civil%C4%83%20profesional%C4%83%20de%20avoca%C8%9Bi!5e0!3m2!1sen!2sro!4v1764867913152!5m2!1sen!2sro"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <!-- Map Placeholder (shown before consent) -->
+                    <div class="map-placeholder" id="mapPlaceholder">
+                        <div class="map-placeholder-content">
+                            <div class="map-placeholder-message">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 15px;">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <h3>Hartă Google Maps</h3>
+                                <p>Pentru a încărca harta interactivă, acceptați cookie-urile Google Maps în setările de confidențialitate.</p>
+                                <p class="map-address"><strong>Adresa noastră:</strong><br>
+                                Str. Stockholm nr. 19, Sector 1<br>
+                                București, 011786, România</p>
+                                <button class="load-map-btn" id="loadMapConsent">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                    </svg>
+                                    Accept Google Maps
+                                </button>
+                                <p class="map-info">Încărcarea hărții va transmite date către Google (SUA).
+                                <a href="PrivacyPolicy/#google-maps" target="_blank">Mai multe informații</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Iframe (loaded after consent) -->
+                    <div class="map-iframe-container" id="mapIframe" style="display: none;">
+                        <!-- Iframe will be injected here by JavaScript -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -458,6 +484,8 @@ $csrf_token = $_SESSION['csrf_token'];
     <!-- Footer loaded by components.js -->
 
     <!-- Scripts -->
+    <script src="./Assets/user-preferences.js"></script>
+    <script src="./Assets/map-embed.js"></script>
     <script src="./Assets/components.js"></script>
     <script src="./script.js"></script>
 
